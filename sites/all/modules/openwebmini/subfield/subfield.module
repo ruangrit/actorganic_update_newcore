@@ -1,0 +1,247 @@
+<?php
+
+/**
+ * @file
+ * Defines simple text field types.
+ */
+
+/**
+ * Implementation of hook_theme().
+ */
+function subfield_theme() {
+  return array(
+    'subfield' => array(
+      'arguments' => array('element' => NULL),
+    ),
+    'subfield_formatter_default' => array(
+      'arguments' => array('element' => NULL),
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_field_info().
+ */
+function subfield_field_info() {
+  return array(
+    'subfield' => array(
+      'label' => t('Sub Field'),
+      'description' => t('Store text in the database.'),
+//      'content_icon' => 'icon_content_text.png',
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_field_settings().
+ */
+function subfield_field_settings($op, $field) {
+  switch ($op) {
+    case 'database columns':
+      $columns['label'] = array('type' => 'varchar', 'length' => 255, 'not null' => FALSE, 'sortable' => TRUE, 'views' => TRUE);
+      $columns['content'] = array('type' => 'text', 'size' => 'big', 'not null' => FALSE, 'sortable' => TRUE, 'views' => TRUE);
+      $columns['format'] = array('type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'views' => FALSE);
+      return $columns;
+  }
+}
+
+/**
+ * Implementation of hook_field().
+ */
+function subfield_field($op, &$node, $field, &$items, $teaser, $page) {
+  switch ($op) {
+    case 'sanitize':
+      foreach ($items as $delta => $item) {
+        if ($item['content']) {
+          $items[$delta]['safe_content'] = check_markup($item['content'], $item['format'], FALSE);
+        }
+        else {
+          $items[$delta]['safe_content'] = '';
+        }
+        $items[$delta]['safe_label'] = check_plain($item['label']);
+      }
+  }
+}
+
+/**
+ * Implementation of hook_content_is_empty().
+ */
+function subfield_content_is_empty($item, $field) {
+  if (empty($item['content']) && empty($item['label'])) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Implementation of hook_field_formatter_info().
+ */
+function subfield_field_formatter_info() {
+  return array(
+    'default' => array(
+      'label' => t('Default'),
+      'field types' => array('subfield'),
+      'multiple values' => CONTENT_HANDLE_CORE,
+    ),
+  );
+}
+
+/**
+ * Theme function for 'default' text field formatter.
+ */
+function theme_subfield_formatter_default($element) {
+  if ($element['#item']['safe_content']) {
+    return '<div class="field-label-inline-first">'. $element['#item']['safe_label']. ':&nbsp;</div>'. $element['#item']['safe_content'];
+  }
+}
+
+/**
+ * Implementation of hook_widget_info().
+ *
+ * Here we indicate that the content module will handle
+ * the default value and multiple values for these widgets.
+ *
+ * Callbacks can be omitted if default handing is used.
+ * They're included here just so this module can be used
+ * as an example for custom modules that might do things
+ * differently.
+ */
+function subfield_widget_info() {
+  return array(
+    'subfield' => array(
+      'label' => t('Sub Field'),
+      'field types' => array('subfield'),
+      'multiple values' => CONTENT_HANDLE_CORE,
+      'callbacks' => array(
+        'default value' => CONTENT_CALLBACK_DEFAULT,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implementation of FAPI hook_elements().
+ *
+ * Any FAPI callbacks needed for individual widgets can be declared here,
+ * and the element will be passed to those callbacks for processing.
+ *
+ * Drupal will automatically theme the element using a theme with
+ * the same name as the hook_elements key.
+ *
+ * Autocomplete_path is not used by text_widget but other widgets can use it
+ * (see nodereference and userreference).
+ */
+function subfield_elements() {
+  return array(
+    'subfield' => array(
+      '#input' => TRUE,
+      '#columns' => array('label', 'content', 'format'), '#delta' => 0,
+      '#process' => array('subfield_process'),
+      '#filter_value' => FILTER_FORMAT_DEFAULT,
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_widget().
+ *
+ * Attach a single form element to the form. It will be built out and
+ * validated in the callback(s) listed in hook_elements. We build it
+ * out in the callbacks rather than here in hook_widget so it can be
+ * plugged into any module that can provide it with valid
+ * $field information.
+ *
+ * Content module will set the weight, field name and delta values
+ * for each form element. This is a change from earlier CCK versions
+ * where the widget managed its own multiple values.
+ *
+ * If there are multiple values for this field, the content module will
+ * call this function as many times as needed.
+ *
+ * @param $form
+ *   the entire form array, $form['#node'] holds node information
+ * @param $form_state
+ *   the form_state, $form_state['values'][$field['field_name']]
+ *   holds the field's form values.
+ * @param $field
+ *   the field array
+ * @param $items
+ *   array of default values for this field
+ * @param $delta
+ *   the order of this item in the array of subelements (0, 1, 2, etc)
+ *
+ * @return
+ *   the form item for a single element for this field
+ */
+function subfield_widget(&$form, &$form_state, $field, $items, $delta = 0) {
+  $element = array(
+    '#type' => $field['widget']['type'],
+    '#default_value' => isset($items[$delta]) ? $items[$delta] : '',
+  );
+  return $element;
+}
+
+/**
+ * Process an individual element.
+ *
+ * Build the form element. When creating a form using FAPI #process,
+ * note that $element['#value'] is already set.
+ *
+ * The $fields array is in $form['#field_info'][$element['#field_name']].
+ */
+function subfield_process($element, $edit, $form_state, $form) {
+  $field = $form['#field_info'][$element['#field_name']];
+  $field_label   = $element['#columns'][0];
+  $field_content = $element['#columns'][1];
+  $field_format = $element['#columns'][2];
+
+  $element[$field_label] = array(
+    '#type' => 'textfield',
+    '#default_value' => isset($element['#value'][$field_label]) ? $element['#value'][$field_label] : NULL,
+    '#weight' => -1,
+    '#size' => 20,
+  );
+
+  $element[$field_content] = array(
+    '#type' => 'textarea',
+    '#default_value' => isset($element['#value'][$field_content]) ? $element['#value'][$field_content] : NULL,
+    '#rows' => 3,
+    '#weight' => 0,
+    // The following values were set by the content module and need
+    // to be passed down to the nested element.
+    '#title' => $element['#title'],
+    '#description' => $element['#description'],
+    '#field_name' => $element['#field_name'],
+    '#type_name' => $element['#type_name'],
+    '#delta' => $element['#delta'],
+    '#columns' => $element['#columns'],
+  );
+
+  $format = isset($element['#value'][$field_format]) ? $element['#value'][$field_format] : FILTER_FORMAT_DEFAULT;
+  $parents = array_merge($element['#parents'] , array($field_format));
+  $element[$field_format] = filter_form($format, 1, $parents);
+
+  // Used so that hook_field('validate') knows where to flag an error.
+  $element['_error_element'] = array(
+    '#type' => 'value',
+    '#value' => implode('][', array_merge($element['#parents'], array($field_label, $field_content))),
+  );
+
+  return $element;
+}
+
+/**
+ * FAPI theme for an individual text elements.
+ *
+ * The textfield or textarea is already rendered by the
+ * textfield or textarea themes and the html output
+ * lives in $element['#children']. Override this theme to
+ * make custom changes to the output.
+ *
+ * $element['#field_name'] contains the field name
+ * $element['#delta]  is the position of this element in the group
+ */
+function theme_subfield($element) {
+  return $element['#children'];
+}
+

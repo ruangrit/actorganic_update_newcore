@@ -1,0 +1,94 @@
+
+@mixin t-radius($r) {
+  -moz-border-radius-topleft: $r;
+  -moz-border-radius-topright: $r;
+  -webkit-border-top-right-radius: $r;
+  -webkit-border-top-left-radius: $r;
+}
+
+@mixin b-radius($r) {
+  -moz-border-radius-bottomleft: $r;
+  -moz-border-radius-bottomright: $r;
+  -webkit-border-bottom-right-radius: $r;
+  -webkit-border-bottom-left-radius: $r;
+}
+
+@mixin all-radius($r) {
+  border-radius: $r;
+  -moz-border-radius: $r;
+  -webkit-border-radius: $r;
+
+}
+
+@mixin border($px, $style, $colorolor, $r: 0px) {
+	border: $px $style $colorolor;
+	border-radius: $r;
+  -moz-border-radius: $r;
+  -webkit-border-radius: $r;
+} /* @include border(1px, solid, #000, 5px) */
+
+@mixin border_bt($style, $color, $px: 10px){
+  border-bottom: 1px $style $color;
+  margin: 0 0 $px;
+  padding: 0 0 $px;
+}
+
+@mixin remove_text {
+  clear: both;
+  text-indent: -999em;
+  position: absolute;
+  overflow: hidden; 
+}
+
+@mixin button_link($w, $h, $img) {
+	@include text-indent;
+	width: $w;
+	height: $h;
+	display: block;
+	background: url(../images/#{$img}) no-repeat;
+} 
+
+@mixin position($pos: absolute, $top: 0px, $left: 0px, $width: auto, $height: auto) {
+  position: $pos;
+  left: $left;
+  top: $top;
+  width: $width;
+  height: $height;
+  overflow: hidden;
+}
+
+
+
+/* variable */
+/* All color of text */
+/* c = color *//*
+
+$color_text: red; 
+$color_sologan: #000;
+$color_footer: #000;
+$color_date: #000;
+
+$color_link: #000; 
+$color_hover_link: #000; 
+$color_nav_link: #000;
+$color_nav_hover_link: #000;
+$color_more_link: #000;
+$color_more_hover_link: #000;
+$color_footer_link: #000;
+$color_footer_hover_link: #000;
+
+$color_title: #000;
+$color_title_footer: #000;
+$color_h1: #000;
+$color_h2: #000;
+$color_header: #0b528d; 
+$color_desc: #999; 
+$color_body: #f1f1f1; 
+$color_border: #ccc; */
+/*
+$size: 30px;
+
+$fontsize: $size; 
+$fontfamily: $family;
+$fontsize_heading: $size;
+*/ 

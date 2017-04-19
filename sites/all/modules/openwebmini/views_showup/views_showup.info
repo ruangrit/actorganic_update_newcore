@@ -1,0 +1,8 @@
+; $Id$
+name = Views ShowUp
+description = Views display plugin integrate with jQuery Effect ShowUp
+core = 6.x
+package = Views
+version = 6.x-1.0
+
+dependencies[] = views

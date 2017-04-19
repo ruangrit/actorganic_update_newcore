@@ -1,0 +1,35 @@
+/* $Id: views_horizontal_slider.css,v 1.2 2010/07/31 12:56:58 eanima Exp $ */
+
+/**
+ * Basic css for output * 
+ */
+
+div.views_horizontal_slider ul{
+  list-style: none;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  margin: 0;
+  padding: 0;
+  width:940px;
+}
+
+div.views_horizontal_slider ul li{
+  float: left;
+  padding: 0px;
+  display: block;
+  margin-right: 2px;
+  color: #7c7c7c;  
+  cursor: pointer; 
+  overflow:hidden;
+  position:relative; /* fix for ie7 relative positioning of children*/
+}
+
+/*no padding right for the last item*/
+div.views_horizontal_slider ul li.hslider-last {
+  margin-right:0px
+}
+
+div.views_horizontal_slider ul li img{
+  z-index:100;
+}
+

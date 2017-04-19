@@ -1,0 +1,599 @@
+<?php
+// get browser info
+function browser_warning_detect() {
+	$userAgent = strtolower($_SERVER['HTTP_USER_AGENT']);
+	
+	// Identify the browser. Check Opera and Safari first in case of spoof.
+	if (preg_match('/opera/', $userAgent)) {
+		$name = 'opera';
+	}
+	elseif (preg_match('/chrome/', $userAgent)) {
+		$name = 'chrome';
+	}
+	elseif (preg_match('/webkit/', $userAgent)) {
+		$name = 'safari';
+	}
+	elseif (preg_match('/msie/', $userAgent)) {
+		$name = 'msie';
+	}
+	elseif (preg_match('/mozilla/', $userAgent) && !preg_match('/compatible/', $userAgent)) {
+		$name = 'mozilla';
+	}
+	else {
+		$name = 'unrecognized';
+	}
+	
+	// What version?
+	if (preg_match("/msie 7\.0/" , $userAgent)) {
+		// multiagent hack
+		$version = '7.0';
+	}
+	elseif (preg_match('/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches)) {
+	  if ($name == 'msie') {
+	    $version = ($matches[1] < 6) ? 5 : $matches[1];
+	  }
+	  else {
+  		$version = $matches[1];
+    }
+	}
+	else {
+		$version = 'unrecognized';
+	}
+	
+	// Running on what platform?
+	if (preg_match('/linux/', $userAgent)) {
+		$platform = 'linux';
+		$platform_version = 'unrecognized';
+	}
+	elseif (preg_match('/macintosh|mac os x|mac_powerpc/', $userAgent)) {
+		$platform = 'mac';
+		if (preg_match('/mac os x/', $userAgent)) {
+			$platform_version = 'x';
+		}
+		else {
+			$platform_version = 'classic';
+		}
+	}
+	elseif (preg_match('/windows (.*)[;|\)]|win32/', $userAgent, $matches)) {
+		$platform = 'windows';
+		if (isset($matches[1])) {
+			switch($matches[1]) {
+				case 'nt 6.1':
+					$platform_version = '7';
+				break;
+				case 'nt 6.0':
+					$platform_version = 'vista';
+				break;
+				case 'nt 5.2':
+				case 'nt 5.1':
+					$platform_version = 'xp';
+				break;
+				case 'nt 5.01':
+				case 'nt 5.0':
+					$platform_version = '2000';
+				break;
+				case 'nt 4.0':
+					$platform_version = 'nt-4';
+				break;
+				case '98':
+					$platform_version = '98';
+				break;
+				case '95':
+					$platform_version = '95';
+				break;
+				case 'ce':
+					$platform_version = 'ce';
+				break;
+				default:
+					$platform_version = 'unrecognized';
+				break;
+			}
+		}
+		else {
+			$platform_version = 'unrecognized';
+		}
+	}
+	else {
+		$platform = 'unrecognized';
+		$platform_version = 'unrecognized';
+	}
+	
+	return array(
+		'name'				=> $name,
+		'version'			=> intval($version),
+		'platform'			=> $platform,
+		'platform_version'	=> $platform_version,
+	);
+}
+
+// hook_init
+function browser_warning_init() {
+	// get information
+	global $base_url;
+	$browser = browser_warning_detect();
+	
+	// get all variables
+	$variables = variable_get('browser_warning', array());
+	
+	// check all settings and make list of matches to current browser/OS
+	$matches = array(
+		'os' => array(),
+		'browser' => array(),
+		'requirement' => array(),
+	);
+	
+	$messages = array();
+	foreach ($variables as $name => $value) {
+		switch ($name) {
+			case 'os':
+				foreach ($value as $os_name => $os_value) {
+					foreach ($os_value as $version => $enabled) {
+						// check if it matches the OS and the version if this OS detects versions, only matches once
+						if ($os_name == $browser['platform'] && $enabled == 1 && ($version == 0 || $version == $browser['platform_version'])) {
+							$matches['os'][$os_name] = $version;
+							break;
+						}
+					}
+				}
+			break;
+			case 'browser':
+				foreach ($value as $browser_name => $browser_value) {
+					foreach ($browser_value as $version => $enabled) {
+						// check if it matches the browser and the version if this browser detects versions, only matches once
+						if ($browser_name == $browser['name'] && $enabled == 1 && ($version == 0 || $version == $browser['version'])) {
+							$matches['browser'][$browser_name] = $version;
+							break;
+						}
+					}
+				}
+			break;
+			case 'requirement':
+				if ($value['javascript'] == 1) {
+					$matches['requirement']['javascript'] = 1;
+				}
+				if ($value['cookies'] == 1) {
+					$matches['requirement']['cookies'] = 1;
+					$matches['requirement']['type'] = $value['type'];
+					
+					// parse exclusions
+					$paths = explode("\n", $value['pages']);
+					foreach ($paths as $path) {
+						// format all paths with l, and pull out actual path
+						$path = trim($path);
+						$path = trim($path, "/");
+						$path = l($path, $path);
+						$pieces = explode("\"", $path);
+						$path = $pieces[1];
+						
+						// save path
+						$matches['requirement']['pages'][$path] = 1;
+					}
+				}
+			break;
+		}
+	}
+	
+	// display message for browser match
+	if (!empty($matches['browser'])) {
+		$name = key($matches['browser']);
+		$version = array_pop($matches['browser']);
+	
+		// replace tokens
+		if (!is_numeric($version) || $version != 0) {
+			$message = preg_replace("/\[browser-version\]/i", $version, $variables['message']['browser']);
+		}
+		else {
+			$message = preg_replace("/\[browser-version\]/i", "N/A", $variables['message']['browser']);
+		}
+		$message = preg_replace("/\[browser\]/i", $name, $message);
+		
+		// replace msie with internet explorer
+		$message = preg_replace("/msie/", "internet explorer", $message);
+		
+		//drupal_set_message(t($message), "status", FALSE);
+		$messages[] = $message;
+	}
+	
+	// display message for OS match
+	if (!empty($matches['os'])) {
+		$name = key($matches['os']);
+		$version = array_pop($matches['os']);
+		
+		// replace tokens
+		if (!is_numeric($version) || $version != 0) {
+			$message = preg_replace("/\[os-version\]/i", $version, $variables['message']['os']);
+		}
+		else {
+			$message = preg_replace("/\[os-version\]/i", "N/A", $variables['message']['os']);
+		}
+		$message = preg_replace("/\[os\]/i", $name, $message);
+		
+		//drupal_set_message(t($message), "status", FALSE);
+		$messages[] = $message;
+	}
+	
+	// display messages for requirements
+	if (!empty($matches['requirement'])) {
+		// find domain
+		$domain = ini_get('session.cookie_domain') ? trim(ini_get('session.cookie_domain'), ".") : trim($_SERVER['HTTP_HOST'], ".");
+			
+		// convert base url to compare against current
+		preg_match("/http[s:|:]\/\/[^\/]+\/(.*)/i", $base_url, $m);
+		$base_path = trim($m[1], "/");
+		
+		// convert request URI so it always finds the correct path
+		$path = trim($_SERVER['REQUEST_URI']);
+		$path = trim($path, "/");
+		if ($path == $base_path) {
+			$path = "<front>";
+		}
+		
+		$path = l($path, $path);
+		$pieces = explode("\"", $path);
+		$path = $pieces[1];
+		
+		// test for cookies
+		if (!$_COOKIE && $matches['requirement']['cookies'] == 1 && ( ($matches['requirement']['type'] == 'hide' && is_null($matches['requirement']['pages'][$path])) || ($matches['requirement']['type'] == 'show' && isset($matches['requirement']['pages'][$path])) )) {
+			// replace tokens
+			$message = preg_replace("/\[domain\]/i", $domain, $variables['message']['cookies']);
+			
+			//drupal_set_message(t($message), "status", FALSE);
+		  $messages[] = $message;
+		}
+		
+		// test for javascript
+		if ($_COOKIE && $_COOKIE['has_js'] == 0 && $matches['requirement']['javascript'] == 1 && ( ($matches['requirement']['type'] == 'hide' && is_null($matches['requirement']['pages'][$path])) || ($matches['requirement']['type'] == 'show' && isset($matches['requirement']['pages'][$path])) )) {
+			// replace tokens
+			$message = preg_replace("/\[domain\]/i", $domain, $variables['message']['javascript']);
+			
+			//drupal_set_message(t($message), "status", FALSE);
+		  $messages[] = $message;
+		}
+	}
+	variable_set('browser_warning_message', $messages);
+	
+	$module_path = drupal_get_path('module', 'browser_warning');
+	if ($browser['name'] == 'msie') {
+	  if ($browser['version'] < 6.0) {
+	    drupal_add_js($module_path . '/browser_warning_ie5.js');
+	  }
+	  else {
+	    drupal_add_js($module_path . '/browser_warning.js');
+	  }
+	}
+	else {
+	  drupal_add_js($module_path . '/browser_warning.js');
+	}
+	drupal_add_css($module_path . '/browser_warning.css');
+}
+
+function browser_warning_get_messages() {
+  $messages = variable_get('browser_warning_message', array());
+  if (count($messages)) {
+    drupal_json($messages);
+  }
+  else {
+    drupal_json('');
+  }
+}
+
+// hook menu
+function browser_warning_menu() {
+	$items['admin/settings/browser_warning'] = array(
+		'title' => t('Browser Warning'),
+		'description' => t('Browser Warning Settings.'),
+		'page callback' => 'browser_warning_settings',
+		'type' => MENU_NORMAL_ITEM,
+		'access arguments' => array('administer browser warning')
+	);
+	$items['browser_warning/getmessages'] = array(
+	  'page callback' => 'browser_warning_get_messages',
+	  'access arguments' => array('access content'),
+	  'type' => MENU_CALLBACK,
+	);
+	
+	return $items;
+}
+
+// hook_perm
+function browser_warning_perm() {
+	return array('administer browser warning');
+}
+
+// hook_help
+function browser_warning_help($path, $arg) {
+	switch($path) {
+		case 'admin/settings/browser_warning':
+			return t('Select the browsers and/or operating systems to warn on and enter the warning to display.');
+		break;
+	}
+}
+
+// page callback for settings
+function browser_warning_settings() {
+	return drupal_get_form('browser_warning_settings_form');
+}
+
+// browser settings form
+function browser_warning_settings_form($form_state) {
+	// get all variables
+	$variables = variable_get('browser_warning', array());
+	
+	// cookies
+	$form['requirement'] = array(
+		'#type' => 'fieldset',
+		'#title' => t('Requirements'),
+		'#tree' => TRUE,
+		'#collapsible' => TRUE,
+	);
+	$form['requirement']['javascript'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Javascript'),
+		'#default_value' => isset($variables['requirement']['javascript']) ? $variables['requirement']['javascript'] : 0,
+		'#weight' => -2,
+	);
+	$form['requirement']['cookies'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Cookies'),
+		'#default_value' => isset($variables['requirement']['cookies']) ? $variables['requirement']['cookies'] : 0,
+		'#weight' => -1,
+	);
+	$form['requirement']['message']['javascript'] = array(
+		'#type' => 'textarea',
+		'#title' => t('Javascript Message'),
+		'#description' => t('Enter the message to display, available tokens: [domain] (will only display if cookies are set, as cookies are required to determine this)'),
+		'#default_value' => isset($variables['message']['javascript']) ? t($variables['message']['javascript']) : '',
+		'#weight' => 0,
+	);
+	$form['requirement']['message']['cookies'] = array(
+		'#type' => 'textarea',
+		'#title' => t('Cookie Message'),
+		'#description' => t('Enter the message to display, available tokens: [domain] (will display first time visitor comes to your site if page is not excluded, as cookies are not set)'),
+		'#default_value' => isset($variables['message']['cookies']) ? t($variables['message']['cookies']) : '',
+		'#weight' => 1,
+	);
+	$form['requirement']['type'] = array(
+		'#type' => 'radios',
+		'#options' => array(
+			'hide' => t('Show on every page except the listed pages.'),
+			'show' => t('Show on only the listed pages.'),
+		),
+		'#default_value' => isset($variables['requirement']['type']) ? $variables['requirement']['type'] : 'hide',
+		'#weight' => 2,
+	);
+	$form['requirement']['pages'] = array(
+		'#type' => 'textarea',
+		'#title' => t('Pages'),
+		'#description' => t('Enter one page per line as Drupal paths. &lt;front&gt; is the front page. (this allows you to hide the message on landing pages, or only show on required pages)'),
+		'#default_value' => isset($variables['requirement']['pages']) ? t($variables['requirement']['pages']) : t(''),
+		'#weight' => 3,
+	);
+	
+	// browsers
+	$form['browser'] = array(
+		'#type' => 'fieldset',
+		'#title' => t('Browsers'),
+		'#tree' => TRUE,
+		'#collapsible' => TRUE,
+	);
+	
+	// IE
+	$form['browser']['msie'] = array(
+		'#type' => 'fieldset',
+		'#title' => t('Internet Explorer'),
+		'#tree' => TRUE,
+		'#collapsible' => TRUE,
+	);
+	$form['browser']['msie'][5] = array(
+		'#type' => 'checkbox',
+		'#title' => t('5'),
+		'#default_value' => isset($variables['browser']['msie'][5]) ? $variables['browser']['msie'][5] : 0,
+	);
+	$form['browser']['msie'][6] = array(
+		'#type' => 'checkbox',
+		'#title' => t('6'),
+		'#default_value' => isset($variables['browser']['msie'][6]) ? $variables['browser']['msie'][6] : 0,
+	);
+	$form['browser']['msie'][7] = array(
+		'#type' => 'checkbox',
+		'#title' => t('7'),
+		'#default_value' => isset($variables['browser']['msie'][7]) ? $variables['browser']['msie'][7] : 0,
+	);
+	$form['browser']['msie'][8] = array(
+		'#type' => 'checkbox',
+		'#title' => t('8'),
+		'#default_value' => isset($variables['browser']['msie'][8]) ? $variables['browser']['msie'][8] : 0,
+	);
+	
+	// Safari
+	$form['browser']['safari'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Safari'),
+		'#default_value' => isset($variables['browser']['safari'][0]) ? $variables['browser']['safari'][0] : 0,
+	);
+	
+	// Chrome
+	$form['browser']['chrome'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Chrome'),
+		'#default_value' => isset($variables['browser']['chrome'][0]) ? $variables['browser']['chrome'][0] : 0,
+	);
+	
+	// Opera
+	$form['browser']['opera'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Opera'),
+		'#default_value' => isset($variables['browser']['opera'][0]) ? $variables['browser']['opera'][0] : 0,
+	);
+	
+	// Mozilla
+	$form['browser']['mozilla'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Mozilla'),
+		'#default_value' => isset($variables['browser']['mozilla'][0]) ? $variables['browser']['mozilla'][0] : 0,
+	);
+	
+	// Browser message
+	$form['browser']['message'] = array(
+		'#type' => 'textarea',
+		'#title' => t('Browser Message'),
+		'#description' => t('Enter the message to display, available tokens: [browser], [browser-version] (browser-version only available in IE, others will show N/A)'),
+		'#default_value' => isset($variables['message']['browser']) ? t($variables['message']['browser']) : t(''),
+	);
+	
+	// OSes
+	$form['os'] = array(
+		'#type' => 'fieldset',
+		'#title' => t('Operating Systems'),
+		'#tree' => TRUE,
+		'#collapsible' => TRUE,
+	);
+	
+	// Windows
+	$form['os']['windows'] = array(
+		'#type' => 'fieldset',
+		'#title' => t('Windows'),
+		'#tree' => TRUE,
+		'#collapsible' => TRUE,
+	);
+	$form['os']['windows']['7'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('7'),
+		'#default_value' => isset($variables['os']['windows'][7]) ? $variables['os']['windows'][7] : 0,
+	);
+	$form['os']['windows']['vista'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Vista'),
+		'#default_value' => isset($variables['os']['windows']['vista']) ? $variables['os']['windows']['vista'] : 0,
+	);
+	$form['os']['windows']['xp'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('XP'),
+		'#default_value' => isset($variables['os']['windows']['xp']) ? $variables['os']['windows']['xp'] : 0,
+	);
+	$form['os']['windows']['2000'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('2000'),
+		'#default_value' => isset($variables['os']['windows'][2000]) ? $variables['os']['windows'][2000] : 0,
+	);
+	$form['os']['windows']['nt4'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('NT 4'),
+		'#default_value' => isset($variables['os']['windows']['nt4']) ? $variables['os']['windows']['nt4'] : 0,
+	);
+	$form['os']['windows']['98'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('98'),
+		'#default_value' => isset($variables['os']['windows'][98]) ? $variables['os']['windows'][98] : 0,
+	);
+	$form['os']['windows']['95'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('95'),
+		'#default_value' => isset($variables['os']['windows'][95]) ? $variables['os']['windows'][95] : 0,
+	);
+	$form['os']['windows']['ce'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('CE'),
+		'#default_value' => isset($variables['os']['windows']['ce']) ? $variables['os']['windows']['ce'] : 0,
+	);
+	
+	// Mac
+	$form['os']['mac'] = array(
+		'#type' => 'fieldset',
+		'#title' => t('Macintosh'),
+		'#tree' => TRUE,
+		'#collapsible' => TRUE,
+	);
+	$form['os']['mac']['x'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('X'),
+		'#default_value' => isset($variables['os']['mac']['x']) ? $variables['os']['mac']['x'] : 0,
+	);
+	$form['os']['mac']['classic'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Classic'),
+		'#default_value' => isset($variables['os']['mac']['classic']) ? $variables['os']['mac']['classic'] : 0,
+	);
+	
+	// Linux
+	$form['os']['linux'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Linux'),
+		'#default_value' => isset($variables['os']['linux'][0]) ? $variables['os']['linux'][0] : 0,
+	);
+	
+	// OS message
+	$form['os']['message'] = array(
+		'#type' => 'textarea',
+		'#title' => t('OS Message'),
+		'#description' => t('Enter the message to display, available tokens: [os], [os-version] (version not available for linux, it will show N/A)'),
+		'#default_value' => isset($variables['message']['os']) ? t($variables['message']['os']) : t(''),
+	);
+	
+	// Submit
+	$form['submit'] = array(
+		'#type' => 'submit',
+		'#value' => t('Save'),
+	);
+	
+	return $form;
+}
+
+// browser settings submit
+function browser_warning_settings_form_submit($form, &$form_state) {
+	$variables = array(
+		'os' => array(),
+		'browser' => array(),
+		'requirement' => array(),
+		'message' => array(),
+	);
+	
+	// add browser settings
+	if (is_array($form_state['values']['browser'])) {
+		foreach ($form_state['values']['browser'] as $name => $value) {
+			// add message, name, and version if present, or use 0
+			if ($name == "message") {
+				$variables['message']['browser'] = $value;
+			}
+			elseif (is_array($value)) {
+				foreach ($value as $version_num => $version_enabled) {
+					$variables['browser'][$name][$version_num] = $version_enabled;
+				}
+			}
+			else {
+				$variables['browser'][$name][0] = $value;
+			}
+		}
+	}
+	
+	// add os settings
+	if (is_array($form_state['values']['os'])) {
+		foreach ($form_state['values']['os'] as $name => $value) {
+			// add message, name, and version if present, or use 0
+			if ($name == "message") {
+				$variables['message']['os'] = $value;
+			}
+			elseif (is_array($value)) {
+				foreach ($value as $version_num => $version_enabled) {
+					$variables['os'][$name][$version_num] = $version_enabled;
+				}
+			}
+			else {
+				$variables['os'][$name][0] = $value;
+			}
+		}
+	}
+	
+	// add requirements
+	if (is_array($form_state['values']['requirement'])) {
+		$variables['requirement']['cookies'] = $form_state['values']['requirement']['cookies'];
+		$variables['requirement']['javascript'] = $form_state['values']['requirement']['javascript'];
+		$variables['requirement']['type'] = $form_state['values']['requirement']['type'];
+		$variables['requirement']['pages'] = $form_state['values']['requirement']['pages'];
+		$variables['message']['cookies'] = $form_state['values']['requirement']['message']['cookies'];
+		$variables['message']['javascript'] = $form_state['values']['requirement']['message']['javascript'];
+	}
+	
+	// save variables
+	variable_set('browser_warning', $variables);
+}

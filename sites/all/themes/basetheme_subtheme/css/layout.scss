@@ -1,0 +1,64 @@
+/*......................................................................... 
+    Project:				BaseTheme for Openwebmini
+	  Version:				1.1
+	  File:         		layout.scss
+	  copyright:	  	since 2011 Opendream Co., Ltd.
+	......................................................................... */
+
+/***************************************************************************
+ *
+ *                              					** LAYOUT **
+ *
+ *  Layout: 3 column - 		|--left--|-----content-----|--right--|  	(two sidebar)
+ *  Layout: 2 column - 		|--------content--------|----right----|  	(right sidebar) 
+ *  Layout: 2 column - 		|----left----|--------content----------|   	(left sidebar) 
+ *
+ *
+*****************************************************************************/
+
+
+/**
+ ************************************************************    
+ *                                            Unit: px 
+ ************************************************************ 
+ */
+
+#base-fixed #header, #base-fixed #container, #base-fixed #footer {
+  width: 960px; 
+}
+
+#base-fixed {
+  .two-sidebars {
+    #content-inner, #content-top {
+      margin: 0 255px; /* sidebar width + margin (between content & sidebar 1 sidebar) | sample: 240 + margin 15 | */
+    }
+    #sidebar-left {
+      margin-left: -100%;
+      width: 240px;                       
+    }
+    #sidebar-right {
+      margin-left: -240px;
+      width: 240px; 
+    } 
+  } /** (two sidebar) **/
+  
+  .sidebar-right {  
+    #content-inner, #content-top {
+      margin-right: 315px; /* sidebar width + margin (between content & sidebar) */
+    }
+    #sidebar-right {
+      margin-left: -300px;
+      width: 300px; 
+    } 
+  }/** (right sidebar) **/
+ 
+  .sidebar-left {
+    #content-inner, #content-top {
+      margin-left: 315px; /* sidebar width + margin (between content & sidebar) */
+    }
+    #sidebar-left {
+      margin-left: -100%;
+      width: 300px; 
+    } 
+  }/** (left sidebar) **/
+}

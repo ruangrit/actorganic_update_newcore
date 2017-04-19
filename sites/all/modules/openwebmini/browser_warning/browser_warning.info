@@ -1,0 +1,11 @@
+name = Browser Warning
+description = "Warns user if they are using a certain browser or OS."
+core = 6.x
+package = Other
+version = "6.x-1.0.x-dev"
+; Information added by drupal.org packaging script on 2009-05-16
+version = "6.x-1.0.x-dev"
+core = "6.x"
+project = "browser_warning"
+datestamp = "1242432201"
+

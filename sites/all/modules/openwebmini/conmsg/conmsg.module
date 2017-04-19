@@ -1,0 +1,57 @@
+<?php
+
+function conmsg_menu() {
+  $items['varset/%/%'] = array(
+    'page callback' => 'variable_set',
+    'page arguments' => array(1, 2),
+    'access arguments' => array('administer site configuration'),
+  );
+  return $items;
+}
+function conmsg_init() {
+  global $user;
+  if ($user->uid == 1) {
+    $mpath = drupal_get_path('module', 'conmsg');
+    drupal_add_js($mpath.'/conmsg.js');
+    drupal_add_css($mpath.'/conmsg.css');
+  }
+}
+function conmsg_preprocess_page(&$vars) {
+  global $user;
+  if ($user->uid == 1) {
+    $conmsg_msg = array();
+
+    // ROBOT.TXT
+    $handle = fopen('robots.txt', 'r');
+    while (!feof($handle) && fgets($handle, 4096) != 'Disallow: /') $robots = TRUE;
+    fclose($handle); 
+    if ($robots) $conmsg_msg[] = 'Remove line "Disallow: /" in robots.txt';
+
+    // Site information
+    if (variable_get('site_name', 'openwebmini') == 'openwebmini') $conmsg_msg[] = 'Config site information '.l('here', 'admin/settings/site-information');
+
+    // Google Analytic
+    if (variable_get('googleanalytics_account', 'UA-') == 'UA-') $conmsg_msg[] = 'Set google analytics ID '.l('here', 'admin/settings/googleanalytics');
+
+    // Mollom
+    if (variable_get('mollom_public_key', 'e9088e398084d8d4402e60e43e9f4b1c') == 'e9088e398084d8d4402e60e43e9f4b1c') $conmsg_msg[] = 'Set mollom access key '.l('here', 'admin/settings/mollom/settings'); 
+
+    // Scribd
+    if (variable_get('scribd_api_key', '6zmpll7omw7kfm0kfj1tc') == '6zmpll7omw7kfm0kfj1tc') $conmsg_msg[] = 'Set scribd API key '.l('here', 'admin/settings/scribdfield');
+
+    // Video upload
+    if (variable_get('video_upload_youtube_username', 'openwebminimedia') == 'openwebminimedia') $conmsg_msg[] = 'Config youtube account '.l('here', 'admin/settings/video-upload');
+
+    // Delete dummy content
+    if (!variable_get('delete_dummy_content', FALSE)) $conmsg_msg[] = 'Delete dummy contents, if deleted click '.l('here', 'varset/delete_dummy_content/1');
+
+    // Delete not use content type
+    if (!variable_get('delete_dummy_content_type', FALSE)) $conmsg_msg[] = 'Delete dummy content types ('.l('link', 'admin/content/types/manager').'), if deleted click '.l('here', 'varset/delete_dummy_content_type/1');
+
+    // Delete not use views
+    if (!variable_get('delete_dummy_view', FALSE)) $conmsg_msg[] = 'Delete dummy views ('.l('link', 'admin/build/views/manager').'), if deleted click '.l('here', 'varset/delete_dummy_view/1');
+    // Roti
+
+    if (!empty($conmsg_msg)) $vars['conmsg_msg'] = '<div id="conmsg-wrap"><div id="conmsg" class="'.variable_get('conmsg_class', 'show').'"><div class="message warning">'.theme('item_list', $conmsg_msg).'</div></div></div>';
+  }
+}

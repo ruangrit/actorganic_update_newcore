@@ -1,0 +1,67 @@
+# $Id: de.po,v 1.2.2.2 2010/05/31 07:37:48 hutch Exp $
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  menu_block_split.module,v 1.1 2007/06/23 12:49:26 robertgarrigos
+#  menu_block_split.info,v 1.1 2007/06/23 12:49:26 robertgarrigos
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: German translation of menu block split\n"
+"POT-Creation-Date: 2007-12-02 18:34+0100\n"
+"PO-Revision-Date: 2007-12-02 20:01+0100\n"
+"Last-Translator: Alexander Hass\n"
+"Language-Team: Alexander Hass\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#: menu_block_split.module:26
+#: menu_block_split.info:0
+msgid "Menu block split"
+msgstr "Menüblockteilung"
+
+#: menu_block_split.module:54
+msgid "How many blocks with first level menu do you need?"
+msgstr "Wie viele Blöcke mit Menüs der ersten Ebene werden benötigt?"
+
+#: menu_block_split.module:57
+msgid "Set how many first menu level blocks do you need and click on the Save Configuration button to have the form available."
+msgstr "Die Anzahl der benötigten Menüblöcke erster Ebene einstellen und anschließend „Konfiguration speichern“ drücken, damit das Formular angezeigt wird."
+
+#: menu_block_split.module:69
+msgid "Menu Block Split !i"
+msgstr "Menüblockteilung !i"
+
+#: menu_block_split.module:75
+msgid "Block !i"
+msgstr "Block !i"
+
+#: menu_block_split.module:78
+msgid "Choose a block as first level menu to split."
+msgstr "Einen Block für die erste zu teilende Menüebene auswählen."
+
+#: menu_block_split.module:83
+msgid "Title !i"
+msgstr "Titel !i"
+
+#: menu_block_split.module:86
+msgid "Set the title of you resulting block."
+msgstr "Einen Titel für den resultierenden Block angeben."
+
+#: menu_block_split.module:13
+msgid "administer menu block split"
+msgstr "Verwalten geteilter Menüblöcke"
+
+#: menu_block_split.module:0
+msgid "menu_block_split"
+msgstr "menu_block_split"
+
+#: menu_block_split.info:0
+msgid "Allow to have an splitted menu tree within two blocks"
+msgstr "Ermöglicht geteilte Menübäume innerhalb zweier Blöcke."
+

@@ -1,0 +1,239 @@
+/*......................................................................... 
+    Project:				BaseTheme - Subtheme
+	  Version:				1.1
+	  File:         		style.css
+	  copyright:	  	since 2011 Opendream Co., Ltd.
+	......................................................................... */
+	
+
+/*********************************************************
+*                  Typographic reset
+**********************************************************/
+
+/**
+ * Global Font Size
+ *
+ * All modern browsers set a base font of 16px, therefore
+ * the default value of 1em = 16px. We reduce this to 13px.
+ *
+ * 1em now is equal to 13 pixels.
+ *  5px   = 0.385em
+ *  6px   = 0.462em
+ *  7px   = 0.538em
+ *  8px   = 0.615em
+ *  9px   = 0.692em
+ * 10px   = 0.769em
+ * 11px   = 0.846em
+ * 12px   = 0.923em
+ * 13px   = 1em 
+ * 14px   = 1.077em 
+ * 15px   = 1.154em 
+ * 16px   = 1.231em
+ * 17px   = 1.308em 
+ * 18px   = 1.385em 
+ * 19px   = 1.462em 
+ * 20px   = 1.538em 
+ * 21px   = 1.615em 
+ * 22px   = 1.692em 
+ * 23px   = 1.769em 
+ * 24px   = 1.846em  
+ * 25px   = 1.923em  
+ *
+ * calculator help "px" to "em" - http://riddle.pl/emcalc/
+ *
+ */
+
+@import "default-scss";
+
+$color_desc: #999; 
+$color_body: #f1f1f1; 
+$color_border: #ccc; 
+$color_link: #2d87cc; 
+$color_hover_link: #3B5998; 
+$color_text: #333; 
+$color_header: #0b528d;
+$color_term: #E3E3E3;
+$color_term-hover: #D8D8D8;
+$color_bg: #f5f5f5;
+/*********************************************************
+*                                         BODY
+**********************************************************/
+
+/**   
+*    Cufon : http://cufon.local/generate/ 
+*    Fontface : http://www.fontsquirrel.com/fontface/generator
+**/
+
+body {
+  font-family: Thonburi, Helvetica, Tahoma, sans-serif;
+  color: $color_text; 
+  &.not-front {
+  }
+  &.admin-menu {
+    .not-front {    
+    }
+  }
+}
+
+a {
+  color: $color_link;
+  &:link {
+    color: $color_link; 
+  }
+  &:hover, &.active, &:active {
+    color: $color_hover_link;
+  }
+  &:focus {
+  } 
+}
+
+li a.active {
+  color: $color_hover_link;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $color_header;
+}
+
+/*********************************************************
+*                                             Node
+**********************************************************/
+
+.node {
+	.submitted {
+	  color: $color_desc;
+	}
+  .node-terms {
+	  ul.tags li {
+	    a {
+	      background: $color_term;
+		    &:hover {
+		      background: $color_term-hover;
+		    }
+	    }
+	  }
+	}
+}
+
+/*********************************************************
+*                                          Comments
+**********************************************************/
+
+#comments {
+  .indented {
+    border-left: 5px solid $color_border;
+  }
+}
+
+/*********************************************************
+*                                          Nice menu
+**********************************************************/
+
+#header-region {
+	.block-nice_menus {
+	  ul.nice-menu {
+	    li {
+	      a {
+		      border-right: 1px solid #fff;
+		      background: #e3e3e3;
+		      border-right: 1px solid #eee;
+		      &:hover, &.active {
+		        background: #ccc;
+		      }
+	      }
+	      ul {
+			    background: #e5e5e5;
+				  border-top: 1px solid #e5e5e5;
+				  top: 37px;
+				  li {
+				    a {
+				      border-bottom: 1px solid #fff;
+						  &:hover, &.active {
+						    background: #ccc;
+						  }		    
+				    }
+				  }
+	      }
+	    }
+	  }
+	}
+}
+
+
+/*********************************************************
+*                                      Structure Website
+**********************************************************/
+#header-wrapper {
+  background: $color_bg;
+}
+
+#container {
+  #main, #main-content {
+  }
+  #content {
+	  #content-inner {
+	    background: $color_bg;
+	  }
+  }
+  #feature {
+    background: $color_bg;
+  }
+}
+
+/*********************************************************
+*                                        Sidebar
+**********************************************************/
+.sidebar {
+  .block {
+	  .content {
+	    background: $color_bg;
+	  } 
+	}
+}
+
+/*********************************************************
+*                                        Login Popup
+**********************************************************/
+
+.loginpop-login-form {
+  border: 3px solid #ccc;
+  background: #fff; 
+}
+
+
+/*********************************************************
+*                                       Global Views 
+**********************************************************/
+
+.views-row {
+	.views-field-created {
+		color: $color_desc;
+	}
+}
+
+
+/*********************************************************
+*                                          Breadcrumb
+**********************************************************/
+
+#breadcrumb {
+  background: $color_bg;
+}
+
+/*********************************************************
+*                                            Pager
+**********************************************************/
+.item-list {
+	ul.pager {
+	  li {
+	    background: #e5e5e5;
+	    &.pager-current {
+	      background: #666;
+	      color: #fff;
+	    }
+	    &:hover {
+	      background: #ccc;
+	    }
+	  }
+	}
+}

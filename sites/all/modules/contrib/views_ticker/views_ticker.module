@@ -1,0 +1,68 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Provide a scrolling items display style for Views.
+ *
+ * This is a placeholder file so drupal will enable the module. All logic is contained in
+ * other files located with the module.
+ * see http://jscroller2.markusbordihn.de/docs/ for usage of js
+ */
+
+/**
+ * Implementation of hook_views_api().
+ */
+function views_ticker_views_api() {
+  return array('api' => 2);
+}
+
+/**
+ * Template function for views_ticker
+ *
+ * @param array $vars
+ *  Array of template variables.
+ */
+function template_preprocess_views_view_ticker(&$vars) {
+  $path = drupal_get_path('module', 'views_ticker');
+  drupal_add_css($path .'/views.ticker.scroller.css');
+
+  $view = $vars['view'];
+  $options = $view->style_plugin->options;
+  $vars['viewname'] = $view->name;
+  $vars['field'] = $view->field['title']->field_alias;
+  $vars['scroller_type'] = $options['scroller_type'];
+
+  if ($options['scroller_type'] == 'vertical' ) {
+    $vars['align'] = 'scroller-'. $options['scroller_type'];
+    $vars['direction'] = 'jscroller2_'. $options['vscroller_direction'];
+    $vars['speed'] = 'jscroller2_speed-'. $options['vscroller_speed'];
+    $vars['jmouse'] = ($options['vscroller_mouseover'] ? 'jscroller2_mousemove' : '' );
+    $vars['delay'] = ($options['vscroller_delay'] ? 'jscroller2_delay-'. $options['vscroller_delay'] : '' );
+    $vars['bounce'] = ($options['vscroller_bounce'] ? 'jscroller2_alternate' : '' );
+  }
+  elseif ($options['scroller_type'] == 'horizontal') {
+    $vars['align'] = 'scroller-'. $options['scroller_type'];
+    $vars['direction'] = 'jscroller2_'. $options['hscroller_direction'];
+    $vars['speed'] = 'jscroller2_speed-'. $options['hscroller_speed'];
+    $vars['jmouse'] = ($options['hscroller_mouseover'] ? 'jscroller2_mousemove' : '' );
+    $vars['delay'] = ($options['hscroller_delay'] ? 'jscroller2_delay-'. $options['hscroller_delay'] : '' );
+    $vars['bounce'] = ($options['hscroller_bounce'] ? 'jscroller2_alternate' : '' );
+  }
+  else {
+    $vars['align'] = 'fade-container';
+  }
+
+  if ($options['scroller_type'] == 'fade') {
+    drupal_add_js($path .'/views.ticker.fade.js');
+    drupal_add_js('Drupal.behaviors.views_ticker = function (context) { $("#views-ticker-fade-'. $view->name .'").newsTicker(); }', 'inline');
+  }
+  elseif ($options['scroller_type'] == 'bbc') {
+    drupal_add_js($path .'/views.ticker.bbc.js');
+    drupal_add_js('Drupal.behaviors.views_ticker = function (context) { var options = { newsList: "#views-ticker-fade-'. $view->name .'", startDelay: 10, placeHolder1: " |" }; $().newsTicker(options); }', 'inline');
+  }
+  else {
+    drupal_add_js($path .'/jscroller2-1.5.js');
+  }
+
+}

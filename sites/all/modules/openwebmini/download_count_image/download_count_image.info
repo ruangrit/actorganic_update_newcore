@@ -1,0 +1,6 @@
+name = Download Count Image
+description = Powerup download count can count downloaded image files.
+core = 6.x
+version = 6.x-1.0
+
+dependencies[] = download_count

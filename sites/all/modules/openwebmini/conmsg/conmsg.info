@@ -1,0 +1,4 @@
+; $Id$
+name = Control Message
+description = Openwebmini alert message.
+core = 6.x

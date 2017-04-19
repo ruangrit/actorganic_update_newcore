@@ -1,0 +1,5 @@
+name = Sub Field 
+description = Defines simple textfield and textarea.
+dependencies[] = content
+package = CCK
+core = 6.x

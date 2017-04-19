@@ -1,0 +1,8 @@
+; $Id$
+name = Login Pop
+description = Provide login box like twitter style
+core = 6.x
+version = 6.x-0.1
+
+dependencies[] = user
+dependencies[] = block

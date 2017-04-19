@@ -1,0 +1,15 @@
+; $Id: views_horizontal_slider.info,v 1.2 2010/07/31 12:56:58 eanima Exp $
+
+name = horizontal_slider: Views Integration
+description = Display views data in horizontal sliders.
+package = horizontal_slider
+dependencies[] = views
+core = 6.x
+
+
+; Information added by drupal.org packaging script on 2010-07-31
+version = "6.x-1.2"
+core = "6.x"
+project = "views_horizontal_slider"
+datestamp = "1280595077"
+

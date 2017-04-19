@@ -1,0 +1,4 @@
+; $Id$
+name = Title Block
+description = Make page title as block
+core = 6.x

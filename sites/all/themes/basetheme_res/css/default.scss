@@ -1,0 +1,960 @@
+/*......................................................................... 
+    Project:				BaseTheme for Openwebmini
+	  Version:				1.1
+	  File:         		default.css
+	  copyright:	  	since 2011 Opendream Co., Ltd.
+	......................................................................... */
+
+/****
+*
+* 1. Tables 
+* 2. Form tables
+* 3. Messages
+* 4. Lists
+* 5. Forms
+* 6. Fieldset
+* 7. Block
+* 8. Node
+* 9. Comment
+* 10. Primary Links / block menu
+* 11. Nice Menu
+* 12. Structure Website sidebar
+* 13. Login Popup
+* 14. View
+* 15. Footer
+* 16. Breadcrumb
+* 17. Contact
+* ** Admin **
+*
+****/
+
+/**
+ * Global Font Size
+ *
+ * All modern browsers set a base font of 16px, therefore
+ * the default value of 1em = 16px. We reduce this to 13px.
+ *
+ * 1em now is equal to 13 pixels.
+ *  5px   = 0.385em
+ *  6px   = 0.462em
+ *  7px   = 0.538em
+ *  8px   = 0.615em
+ *  9px   = 0.692em
+ * 10px   = 0.769em
+ * 11px   = 0.846em
+ * 12px   = 0.923em
+ * 13px   = 1em 
+ * 14px   = 1.077em 
+ * 15px   = 1.154em 
+ * 16px   = 1.231em
+ * 17px   = 1.308em 
+ * 18px   = 1.385em 
+ * 19px   = 1.462em 
+ * 20px   = 1.538em 
+ * 21px   = 1.615em 
+ * 22px   = 1.692em 
+ * 23px   = 1.769em 
+ * 24px   = 1.846em  
+ * 25px   = 1.923em  
+ *
+ * calculator help "px" to "em" - http://riddle.pl/emcalc/
+ *
+ */
+
+
+@import "style-scss";
+
+/*********************************************************
+*                      1.Tables 
+**********************************************************/
+	
+table {
+  border: 1px solid #ccc;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+  caption, th {
+    font-weight: bold; 
+  }
+  td, th {
+    vertical-align: middle;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 7px; 
+  }
+  thead th {
+    background: #e0e0e0;
+    border-bottom: 2px solid #c0c0c0;
+    font-weight: bold; 
+  }
+  tr {
+    &.odd, &.info {
+      background-color: #f5f5f5; 
+    }
+    &.even {
+      background-color: #fff; 
+    }
+    &.drag {
+      background-color: #fffff0; 
+    }
+    &.drag-previous {
+      background-color: #ffd; 
+    }
+    &.odd td.active {
+      background-color: #eee; 
+    }
+    &.even td.active {
+      background-color: #f7f7f7; 
+    } 
+  }
+  td {
+    &.region, &.module, &.container td.category {
+      background-color: #eee;
+      border-bottom: 1px solid #ccc;
+      border-top: 15px solid #fff;
+      color: #222;
+      font-weight: bold; 
+    } 
+  }
+  tr:first-child td {
+    &.region, &.module, &.container {
+      border-top-width: 0; 
+    } 
+  } 
+}
+
+
+/**********************************************************
+ *                   2. Forum tables
+ **********************************************************/
+
+#forum {
+  .links {
+    text-align: right;
+    margin: 0 0 10px;
+  }
+  table {
+    width: 100%; 
+  }
+  tr td {
+    
+    .name {
+      background: url(../images/ic-forum.png) no-repeat 0 0;
+      padding-left: 23px; 
+    } 
+  }
+  div.indent {
+    margin-left: 10px; 
+  } 
+}
+
+
+/*********************************************************
+*                   3. Messages
+**********************************************************/
+
+.description {
+  color: #555; 
+}
+
+div {
+  &.messages {
+    font-weight: normal;
+    margin: 1em 0;
+    ul {
+      margin: 0 0 0 1.25em; 
+    } 
+  }
+  &.error {
+    background: #ffeff3 url(../images/error.png) no-repeat 0.5em 0.45em;
+    border: 1px solid #E41F0B;
+    color: #E41F0B; 
+  } 
+}
+
+tr.error {
+  background: #FFEFF3;
+  color: #E41F0B; 
+}
+
+div {
+  &.notice {
+    background: #FFF6BF;
+    border-color: #FFD324;
+    color: #514721; 
+  }
+  &.status {
+    background: #f1ffcf url(../images/ok.png) no-repeat 0.75em 0.6em;
+    border: 1px solid #4DA449;
+    color: #2A6827; 
+  }
+  &.help {
+    background: #eff0ff url(../images/info.png) no-repeat 0.5em 0.45em;
+    border: 1px solid #66BEF4;
+    margin: 1em 0;
+    color: #000D2F; 
+  }
+  &.warning {
+    background: #fff6df url(../images/warning.png) no-repeat 0.5em 0.45em;
+    border: 1px solid #FFB900;
+    color: #9F3800; 
+  }
+  &.messages, &.warning, &.help, &.status, &.error {
+    padding: 0.6em 1em 0.6em 3em; 
+  }
+  &.help code, &.messages code {
+    font-weight: bold; 
+  } 
+}
+
+table {
+  tr.warning {
+    background-color: #F7E8C5;
+    td {
+      color: #F7E8C5; 
+    } 
+  }
+  .merge-up td {
+    color: #514721; 
+  } 
+}
+
+div.ok, tr.ok, table tr.ok td {
+  color: #222;
+  padding: 1em 0.5em; 
+}
+
+.update {
+  tr {
+    &.ok {
+      background: #E8F7C5; 
+    }
+    &.error {
+      background: #FFD0DC; 
+    }
+    &.warning {
+      background: #F7E8C5; 
+    } 
+  }
+  .info {
+    padding: 0 0 0 1em; 
+  }
+  tr.error .version-recommended {
+    background: #FFEFF4; 
+  } 
+}
+
+.includes {
+  color: #222; 
+}
+
+div.help {
+  p:last-child, ul:last-child {
+    margin-bottom: 0; 
+  } 
+}
+
+.form-item {
+  input.error, textarea.error, select.error {
+    border: 2px solid #E41F0B; 
+  }
+  strong.error em {
+    font-weight: bold;
+    color: #E41F0B;
+    font-size: 1.2em; 
+  } 
+}
+
+.block-region {
+  border: 1px dotted #000;
+  color: #000;
+  font: 1em "Lucida Console", Monaco, "DejaVu Sans Mono", monospace;
+  padding: 3px 6px 1px; 
+}
+
+.node-unpublished, .comment-unpublished {
+  background-color: #FFF6DF; 
+}
+
+.unpublished {
+  visibility: hidden; }
+
+.node-unpublished .unpublished, .comment-unpublished .unpublished {
+  background: transparent url(../images/warning-small.png) no-repeat 0 0.1em;
+  color: #FFB900;
+  font-size: 0.94em;
+  margin-left: 0.5em;
+  padding-left: 18px;
+  visibility: visible; 
+}
+
+
+/*********************************************************
+*                     4. Lists
+**********************************************************/
+
+ul, ol {
+  margin: 0 0 1em 1.538em;
+  padding: 0; }
+
+ul {
+  ul, ol {
+    margin: 0 0 0 1.538em; } }
+
+ol {
+  ol, ul {
+    margin: 0 0 0 1.538em; } }
+
+.block {
+  ul {
+    ul, ol {
+      margin: 0 0 0 1.538em; } }
+  ol {
+    ol, ul {
+      margin: 0 0 0 1.538em; } } }
+
+.item-list {
+  ul {
+    ul, ol {
+      margin: 0 0 0 1.538em; } }
+  ol {
+    ol, ul {
+      margin: 0 0 0 1.538em; } } }
+
+ul {
+  list-style: disc;
+  ul {
+    list-style: circle;
+    ul {
+      list-style: square;
+      ul {
+        list-style: circle; 
+      } 
+    } 
+  } 
+}
+
+ol {
+  list-style: decimal;
+  ol {
+    list-style: decimal-leading-zero; 
+  } 
+}
+
+.item-list ul {
+  overflow: hidden; 
+  width: auto;
+}
+  
+li.leaf {
+	list-style-image: none;
+	list-style-type: circle;  
+} 
+  
+
+dt {
+  font-weight: bold; 
+}
+
+dd {
+  margin: 0 0 1em 1.538em; 
+}
+  
+
+/*********************************************************
+*                     5. Forms
+**********************************************************/
+
+form {
+  margin: 0 0 1.5em 0;
+  padding: 0; 
+}
+
+input, button {
+  margin: 0.375em 0.1875em 0 0.1875em; 
+}
+
+input.form-submit {
+  margin: 0;
+  border: 1px solid #ccc;
+  background: #e3e3e3;
+  overflow: hidden;
+  padding: 0.2em;
+  cursor: pointer;
+  cursor: hand;
+  &:hover {
+    background: #ccc;
+    border: 1px solid #a3a3a3; 
+  } 
+}
+
+form > .edit-submit {
+  height: 0px; 
+}
+
+input {
+  &.text, &.title {
+    margin: 0.375em 0;
+    border: 1px solid #C0C0C0; 
+  } 
+}
+
+textarea, select {
+  margin: 0.375em 0;
+  border: 1px solid #C0C0C0; 
+}
+
+input {
+  &.form-text:focus, &.text:focus, &.title:focus {
+    border: 1px solid #FFCC00;
+    background: #FFFFDF; 
+  } 
+}
+
+select:focus {
+  border: 1px solid #FFCC00;
+  background: #FFFFDF; 
+}
+
+textarea:focus {
+  border: 1px solid #FFCC00; 
+}
+
+input {
+  &.text {
+    padding: 0.375em; }
+  &.title {
+    padding: 0.375em;
+    font-size: 1.5em; 
+  }
+  &.form-text {
+    border: 1px solid #CCC;
+    height: auto;
+    padding: 0.1875em;
+    width: 80%; 
+  } 
+}
+
+textarea {
+  border: 1px solid #CCC;
+  height: auto;
+  padding: 0.1875em;
+  width: 80%;
+  font: 1em normal Arial, Helvetica, sans-serif; 
+}
+
+input {
+  font: 1em normal Arial, Helvetica, sans-serif; 
+}
+
+div.form-item {
+  margin-bottom: 1em;
+  margin-top: 1em; 
+}
+
+.form-item {
+  strong.error {
+    display: block; 
+  }
+  textarea.error {
+    padding: 0.1875em; 
+  }
+  .description {
+    font-size: 0.9em;
+    line-height: 1.667em; 
+  } 
+}
+
+span {
+  &.form-required, &.marker {
+    color: #8A1F11; 
+  } 
+}
+
+div.form-item div.description img {
+  margin: 0; 
+}
+
+#node-admin-filter ul {
+  padding: 0.375em 0; 
+}
+
+#edit-operation-wrapper select {
+  margin: 0.375em; 
+}
+
+div.resizable-textarea textarea {
+  margin-top: 0; 
+}
+
+.tips {
+  font-size: 1em;
+  margin-left: 3em;
+  padding: 0.1875em 0.375em 0.1875em 1.5em; 
+}
+
+
+/*********************************************************
+*                    6. Fieldsets
+**********************************************************/
+
+fieldset {
+  background: transparent;
+  border: 1px solid #dadada;
+  margin: 1.5em 0;
+  padding: 0.75em; 
+}
+
+*:first-child + html fieldset {
+  background-color: transparent;
+  background-position: 0 .75em;
+  padding: 0 1em 0.75em;
+  > .description, .fieldset-wrapper .description {
+    padding-top: 1.5em; 
+  } 
+}
+
+fieldset legend {
+  display: block;
+  font-weight: bold;
+  padding: 0 1em 0 0; 
+}
+
+*:first-child + html fieldset {
+  legend, &.collapsed legend {
+    display: inline; 
+  } 
+}
+
+html.js fieldset.collapsed {
+  background: transparent;
+  padding-bottom: .75em;
+  padding-top: 0; 
+}
+
+
+/*********************************************************
+*                       7.Block
+**********************************************************/
+
+.block {
+  clear: both;
+  margin: 0 0 15px;
+  ul {
+    padding: 0 0 3px; 
+  } 
+}
+
+.block-titleblock {
+  margin: 0;
+  overflow: hidden;
+  h1 {
+  } 
+}
+
+
+/*********************************************************
+*                      .Node
+**********************************************************/
+
+.node {
+  margin: 0 0 15px;
+  .content {
+    margin: 0 0 15px; 
+  }
+  .field-field-image {
+    float: left;
+    margin: 0 10px 0 0;
+    .image-caption {
+      background: #fff;
+      font-size: 0.9em;
+      padding: 3px 7px;
+    }
+  }
+  
+  ul.links li {
+    padding: 0 10px 0 0;
+    &.addthis {
+      padding: 0;
+      float: right; 
+    } 
+  } 
+}
+
+.submitted {
+  font-size: 0.9em;
+  color: #666;
+  margin: 5px 0 10px;
+  display: block; 
+}
+
+.terms-inline {
+  font-size: 0.9em; 
+}
+
+.caption {
+} 
+
+/*********************************************************
+*                       9.Comments
+**********************************************************/
+
+#comments {
+  .indented {
+    border-left: 5px solid #ddd;
+    margin-left: 10px;
+    padding: 0 0 0 10px;
+  }
+  h2 {
+	  .ajax-comments-processed {
+	    background: #e5e5e5;
+	    padding: 5px 10px;
+	    display: block; 
+	  }
+  }
+}
+
+.comment {
+  margin: 0 0 10px;
+  h3, .box h2 {
+    font-size: 1.1em;
+    background: #ccc;
+    padding: 3px 5px;
+    margin: 0; 
+  }
+  a {
+    &:link {
+      text-decoration: none; 
+    }
+    &:hover {
+      text-decoration: underline; 
+    } 
+  }
+  .content-comment {
+    padding: 10px;
+    background: #fff; 
+  }
+  .new {
+    color: #ff8000; 
+  } 
+}
+
+.comment-links ul.links {
+  display: block;
+  padding: 0 10px 0 0;
+  text-align: right; 
+}
+
+
+/*********************************************************
+*                 10. Primayly Link - block menu
+**********************************************************/
+/*
+#navigation .block-menu {
+  background: #DDD;
+  font-weight: bold;
+  margin: 0 0 1em;
+  padding: 0;
+  h2 {
+    text-indent: -999em;
+    position: absolute; 
+  }
+  ul {
+    padding: 0; }
+  li {
+    display: inline;
+    line-height: 2;
+    list-style: none;
+    margin: 0 1em;
+    padding: 0; 
+  } 
+}*/
+
+.primary-menu {
+  font-size: 1.1em;
+  overflow: hidden;
+  .content {
+    padding: 1em;
+    overflow: hidden; 
+  }
+  ul.menu {
+    padding: 0;
+    li {
+      float: left;
+      margin: 0 01em 0 0em;
+      padding: 0;
+      list-style: none;
+    }   
+  } 
+}
+
+ul.primary {
+  margin: 5px 0;
+  font-size: 0.9em; 
+}
+
+
+/*********************************************************
+*                     11. Nice menu
+**********************************************************/
+
+.block-nice_menus {
+  border: none;
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  overflow: visible;
+
+  h2 {
+    @include remove_text;
+  }
+  li ul {
+    margin: 0;
+    padding: 10px 0px 10px 10px;
+    background: #e5e5e5;
+    border: none;
+    @include b-radius(5px);
+  } 
+}
+
+#header-region ul.nice-menu ul {
+  border-top: 1px solid #e5e5e5;
+  top: 37px;
+}
+
+#nice-menu-1 li ul li a {
+  height: auto;
+  padding: 5px 10px 5px 20px;
+  text-indent: 0;
+  border-bottom: 1px solid #999; 
+}
+
+/*********************************************************
+*               12. Structure Website
+**********************************************************/
+
+#page {
+  margin: 0 auto; 
+}
+
+.skip-nav {
+  @include remove_text;
+}
+
+#header {
+  margin: 1em 0; 
+}
+
+#branding {
+  float: left;
+  #site-name {
+    float: left; 
+  }
+  blockquote {
+    @include remove_text;
+  } 
+}
+
+#header-top {
+  float: right; 
+}
+
+#container {
+  margin: 0; 
+  #content {
+    width: 100%;
+    margin: 0 0 1em; 
+	  #content-inner {
+	    background: #f1f1f1;
+	    padding: 1em; 
+	  }
+  }
+  #feature {
+    background: #f1f1f1;
+    overflow: hidden;
+    padding: 1em;
+    margin: 0 0 1em;
+  }
+}
+
+/* sidebar */
+
+.sidebar {
+  .block {
+	  h2 {
+	    background: #d6d6d6;
+	    margin: 0;
+	    padding: 10px; 
+	  }
+	  .content {
+	    background: #ececec;
+	    padding: 1em; 
+	  } 
+	}
+	ul {
+	  &.menu {padding: 0 0 0 1em;}
+	}
+}
+
+#content, #sidebar-left, #sidebar-right {
+  float: left; 
+}
+
+
+
+/*********************************************************
+*                    13. Login Popup
+**********************************************************/
+
+ul.loginpop {
+  padding: 0; 
+}
+
+.loginpop-login-form {
+  position: absolute;
+  top: 26px;
+  right: 0;
+  z-index: 9999;
+  width: 230px;
+  margin: 0;
+  padding: 8px;
+  border: 3px solid #ccc;
+  line-height: 16px;
+  -moz-border-radius: 5px 0 5px 5px;
+  -webkit-border-radius: 5px 0 5px 5px;
+  -webkit-box-shadow: 0 3px 3px;
+  -moz-box-shadow: 0 3px 3px;
+  text-align: left;
+  background: #fff; 
+  form {margin: 0;}
+  input.form-submit {
+    float: right;
+    margin: 10px; 
+  }
+  .item-list {
+    clear: both; 
+    ul {
+      margin: 0;
+    }
+  }
+}
+#block-loginpop-0 h2 {@include remove_text;}
+#block-loginpop-0 .loginpop .pop-toggle {
+  padding: 5px 10px;
+  @include t-radius(5px);
+}
+
+.loginpop-login-form {
+  label {
+    float: left; 
+  }
+  input.form-text {
+    float: left;
+    margin: 5px 0;
+    padding: 5px;
+    width: 90%; 
+  } 
+}
+
+/*********************************************************
+*                      Global Views 
+**********************************************************/
+
+.view-content ul li.views-row{
+/* 	float: left; */
+	margin: 0 0 10px;
+	list-style: none;
+}
+
+.views-row {
+	.views-field-title {
+		margin: 0 0 5px;
+		font-weight: bold;
+	}
+	.views-field-field-image-fid {
+		img{ float: left; margin: 0 10px 0 0;}
+	}
+	.views-field-body {
+		margin: 5px 0 0;
+	}
+	.views-field-created {
+		color: #909090;
+		font-size: 0.8em;
+	}
+	.views-field-view-node {
+		float: right;
+	}
+}
+
+table.views-view-grid {
+  border: none;
+}
+
+.more-link{
+	clear: both;
+	text-align: right;
+}
+
+
+/*********************************************************
+*                       Footer
+**********************************************************/
+
+#footer-wrapper {
+  background: #ccc;
+  #footer {
+    margin: 0 auto;
+    padding: 1em; 
+    .block {
+      margin: 0;
+      p {
+        margin: 0; 
+      } 
+    }
+    .footer-cc {
+      font-size: 0.9em; 
+    }
+  } 
+}
+
+/*********************************************************
+*                       Breadcrumb
+**********************************************************/
+
+#breadcrumb {
+  margin: 0 0 1em;
+  background: #e3e3e3; 
+}
+
+.breadcrumb {
+  padding: 0.2em 0.5em;
+  font-size: 0.923em; 
+}
+
+/*********************************************************
+*                       Contact
+**********************************************************/
+#contact-mail-page {
+  float: left; 
+}
+
+.page-contact {
+  .contact-map {
+    margin: 0;
+    padding: 10px 0;
+    text-align: center;
+  }
+}
+
+/*********************************************************
+*                     Admin 
+**********************************************************/
+/*
+body.admin-menu {margin-top: 26px !important;}
+.admin-dependencies, .admin-required, .admin-enabled, .admin-disabled, .admin-missing {
+  font-weight: bold; 
+}
+.page-admin table {width: 100%}
+*/
+
+
+

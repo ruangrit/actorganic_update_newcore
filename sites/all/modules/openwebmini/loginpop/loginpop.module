@@ -1,0 +1,68 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ */
+
+define('LOGINPOP_PATH', drupal_get_path('module', 'loginpop'));
+
+/**
+ * Implementation of hook_block().
+ */
+function loginpop_block($op = 'list', $delta = 0, $edit = array()) {
+  global $user;
+  switch ($op) {
+    case 'list':
+      $blocks[0] = array(
+        'info' => t('Login Pop'),
+        'weight' => 0,
+        'status' => 1,
+        'region' => 'header',
+        'cache' => BLOCK_NO_CACHE,
+      );
+
+      return $blocks;
+    case 'view':
+      $block = array(
+        'subject' => t('Login Pop'),
+        'content' => loginpop_render_block(),
+      );
+
+      return $block;
+  }
+}
+
+/**
+ * Helper funtion to render loginpop block.
+ */
+function loginpop_render_block() {
+  global $user;
+
+  drupal_add_css(LOGINPOP_PATH .'/loginpop.css');
+
+  $items = array();
+  if ($user->uid === 0) {
+    drupal_add_js(LOGINPOP_PATH .'/loginpop.js');
+
+    $item = "<li class=\"pop-toggle pop-login\">";
+    $item .=   l(t('Log in'), 'user/login', array('attributes' => array('class' => 'pop-login-link')));
+    $item .=   "<div class=\"loginpop-login-form\">". drupal_get_form('user_login_block') ."</div>\n";
+    $item .= "</li>\n";
+    $items[] = $item;
+    $items[] = "<li class=\"pop-register\">". l(t('Create new account'), 'user/register') ."</li>\n";
+  }
+  else {
+    $items[] = "<li class=\"pop-username\">". t('<span>Hi,</span> !name', array('!name' => theme('username', $user))) ."</li>\n";
+    if (user_access('create recipe content')) {
+      $items[] = "<li class=\"pop-add\">". l(t('Create content'), 'node/add') ."</li>\n";
+    }
+    $items[] = "<li class=\"pop-logout\"> ". l(t('Log out'), 'logout') ."</li>\n";
+  }
+
+  $output = "<ul class=\"loginpop\">\n";
+  $output .= implode(' ', $items);
+  $output .= "</ul>\n";
+
+  return $output;
+}

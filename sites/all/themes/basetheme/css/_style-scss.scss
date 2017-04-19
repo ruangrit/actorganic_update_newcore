@@ -1,0 +1,58 @@
+@mixin radius($r) {
+  border-radius: $r;
+  -moz-border-radius: $r;
+  -webkit-border-radius: $r;
+}
+@mixin t-radius($r) {
+  -moz-border-radius-topleft: $r;
+  -moz-border-radius-topright: $r;
+  -webkit-border-top-right-radius: $r;
+  -webkit-border-top-left-radius: $r;
+}
+
+@mixin b-radius($r) {
+  -moz-border-radius-bottomleft: $r;
+  -moz-border-radius-bottomright: $r;
+  -webkit-border-bottom-right-radius: $r;
+  -webkit-border-bottom-left-radius: $r;
+}
+
+@mixin remove_text {
+  clear: both;
+  text-indent: -999em;
+  position: absolute;
+  overflow: hidden; 
+}
+
+@mixin link_focus {
+  clear: both;
+  background: #d9d9d9;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  text-indent: 0 !important;
+}
+
+@mixin separate{
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #ccc;
+}
+
+@mixin border_bt($style, $color, $px: 10px){
+  border-bottom: 1px $style $color;
+  margin: 0 0 $px;
+  padding: 0 0 $px;
+} /* @include border_bt(dashed,#ccc,15px); */ 
+
+@mixin transition {
+  -moz-transition: all 0.4s linear;
+  -o-transition: all 0.4s linear;
+  -webkit-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+
+$gray: #dadada;
+
+

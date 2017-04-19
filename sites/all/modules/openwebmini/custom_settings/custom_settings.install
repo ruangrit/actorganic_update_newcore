@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Implementation of hook_install().
+ */
+function custom_settings_install() {
+  drupal_install_schema('custom_settings');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function custom_settings_uninstall() {
+  drupal_uninstall_schema('custom_settings');
+}
+
+/**
+ * Implementation of hook_schema().
+ */
+function custom_settings_schema() {
+  $schema['custom_settings_path'] = array(
+    'fields' => array(
+      'cid' => array('type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+      'path' => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''),
+      'perms' => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''),
+    ),
+    'primary key' => array('cid'),
+  );
+  $schema['custom_settings_field'] = array(
+    'fields' => array(
+      'fid' => array('type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+      'cid' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+      'settings' => array('type' => 'text', 'not null' => TRUE, 'default' => ''),
+    ),
+    'primary key' => array('fid', 'cid'),
+  );
+  return $schema;
+}

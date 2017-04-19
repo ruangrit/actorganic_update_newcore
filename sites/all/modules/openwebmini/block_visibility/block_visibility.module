@@ -1,0 +1,100 @@
+<?php
+
+/**
+ * Implementation of hook_init().
+ */
+function block_visibility_init() {
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function block_visibility_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == 'block_admin_configure') {
+    $form['current_theme'] = array(
+      '#type' => 'hidden',
+      '#value' => _block_visibility_get_current_theme(),
+    );
+    $theme = _block_visibility_get_current_theme();
+    $module = $form['module']['#value'];
+    $delta = $form['delta']['#value'];
+    $settings = db_fetch_object(db_query("SELECT * FROM {blocks} WHERE theme = '%s' AND module = '%s' AND delta = '%s'", $theme, $module, $delta));
+    $form['page_vis_settings']['visibility']['#default_value'] = $settings->visibility;
+    $form['page_vis_settings']['pages']['#default_value'] = $settings->pages;
+    if ($form['cache']) {
+      $form['cache']['cache_block']['#default_value'] = $form->cache;
+    }
+    foreach ($form['#submit'] as $delta => $callback) {
+      if ($callback == 'block_class_form_submit') {
+        unset($form['#submit'][$delta]);
+      }
+    }
+    $form['#submit'][] = 'block_visibility_configure_submit';
+  }
+  elseif ($form_id == 'block_add_block_form') {
+    $form['current_theme'] = array(
+      '#type' => 'hidden',
+      '#value' => _block_visibility_get_current_theme(),
+    );
+    if ($form_id == 'block_add_block_form') {
+      foreach ($form['#submit'] as $delta => $callback) {
+        if ($callback == 'block_add_block_form_submit') {
+          $form['#submit'][$delta] = 'block_visibility_add_form_submit';
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Save the new custom block.
+ */
+function block_visibility_add_form_submit($form, &$form_state) {
+  db_query("INSERT INTO {boxes} (body, info, format) VALUES ('%s', '%s', %d)", $form_state['values']['body'], $form_state['values']['info'], $form_state['values']['format']);
+  $delta = db_last_insert_id('boxes', 'bid');
+
+  foreach (list_themes() as $key => $theme) {
+    if ($theme->status) {
+      if ($theme->name == $form_state['values']['current_theme']) {
+        db_query("INSERT INTO {blocks} (visibility, pages, custom, title, module, theme, status, weight, delta, cache) VALUES(%d, '%s', %d, '%s', '%s', '%s', %d, %d, '%s', %d)", $form_state['values']['visibility'], trim($form_state['values']['pages']), $form_state['values']['custom'], $form_state['values']['title'], $form_state['values']['module'], $theme->name, 0, 0, $delta, BLOCK_NO_CACHE);
+      }
+      else {
+        db_query("INSERT INTO {blocks} (visibility, pages, custom, title, module, theme, status, weight, delta, cache) VALUES(%d, '%s', %d, '%s', '%s', '%s', %d, %d, '%s', %d)", 0, '', $form_state['values']['custom'], $form_state['values']['title'], $form_state['values']['module'], $theme->name, 0, 0, $delta, BLOCK_NO_CACHE);
+      }
+    }
+  }
+
+  foreach (array_filter($form_state['values']['roles']) as $rid) {
+    db_query("INSERT INTO {blocks_roles} (rid, module, delta) VALUES (%d, '%s', '%s')", $rid, $form_state['values']['module'], $delta);
+  }
+
+  drupal_set_message(t('The block has been created.'));
+  cache_clear_all();
+
+  $form_state['redirect'] = 'admin/build/block';
+  return;
+}
+
+function block_visibility_configure_submit($form, &$form_state) {
+  if (!form_get_errors()) {
+    db_query("UPDATE {blocks} SET visibility = %d, pages = '%s', custom = %d, title = '%s' WHERE module = '%s' AND delta = '%s' AND theme = '%s'", $form_state['values']['visibility'], trim($form_state['values']['pages']), $form_state['values']['custom'], $form_state['values']['title'], $form_state['values']['module'], $form_state['values']['delta'], $form_state['values']['current_theme']);
+    db_query("DELETE FROM {blocks_roles} WHERE module = '%s' AND delta = '%s'", $form_state['values']['module'], $form_state['values']['delta']);
+    foreach (array_filter($form_state['values']['roles']) as $rid) {
+      db_query("INSERT INTO {blocks_roles} (rid, module, delta) VALUES (%d, '%s', '%s')", $rid, $form_state['values']['module'], $form_state['values']['delta']);
+    }
+
+    //drupal_set_message(t('The block configuration has been saved.'));
+    cache_clear_all();
+    $form_state['redirect'] = 'admin/build/block';
+    return;
+  }
+}
+
+/**
+ * Get theme
+ */
+function _block_visibility_get_current_theme() {
+  global $user;
+  $theme_default = variable_get('theme_default', '');
+  return $user->theme ? $user->theme : $theme_default;
+}

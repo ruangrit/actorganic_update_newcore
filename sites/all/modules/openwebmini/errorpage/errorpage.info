@@ -1,0 +1,4 @@
+; $Id$
+name = Error Page
+description = Grapphic for 403 404 page with openwebmini style
+core = 6.x

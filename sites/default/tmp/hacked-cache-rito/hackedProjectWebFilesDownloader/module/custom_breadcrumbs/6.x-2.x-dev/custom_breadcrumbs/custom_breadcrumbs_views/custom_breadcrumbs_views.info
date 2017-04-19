@@ -1,0 +1,16 @@
+name = Custom Breadcrumbs for Views
+package = Custom Breadcrumbs
+dependencies[] = custom_breadcrumbs
+dependencies[] = views
+description = Provides Custom Breadcrumbs for views pages.
+core = 6.x
+
+
+
+
+; Information added by drupal.org packaging script on 2013-09-30
+version = "6.x-2.0-rc1+12-dev"
+core = "6.x"
+project = "custom_breadcrumbs"
+datestamp = "1380568429"
+

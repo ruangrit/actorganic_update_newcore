@@ -1,0 +1,77 @@
+# $Id: menu_block_split-module.pot,v 1.1.2.1 2010/05/31 07:37:48 hutch Exp $
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  menu_block_split.module,v 1.5.6.8 2010/05/30 23:40:15 hutch
+#  menu_block_split.info,v 1.2.6.2 2009/02/07 13:33:15 robertgarrigos
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2010-05-31 08:24+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: menu_block_split.module:60
+msgid "Menu Block Split allows any menu block to be split into two blocks: one with the first level menu entries and a second one for all the sublevels."
+msgstr ""
+
+#: menu_block_split.module:61
+msgid "Once you set how many first level menu blocks you need you can go to the <a href=\"@blocks\">blocks admin page</a> to admin your new blocks. You should find a new Menu Block Split second level block and as many Menu Block Split first level blocks as you have set."
+msgstr ""
+
+#: menu_block_split.module:91
+msgid "How many blocks with first level menu do you need?"
+msgstr ""
+
+#: menu_block_split.module:94
+msgid "Select how many first menu level blocks you need and click on the Save Configuration button to make the form available."
+msgstr ""
+
+#: menu_block_split.module:106
+msgid "Menu Block Split !i"
+msgstr ""
+
+#: menu_block_split.module:112
+msgid "Block!i"
+msgstr ""
+
+#: menu_block_split.module:115
+msgid "Choose a block as first level menu to split."
+msgstr ""
+
+#: menu_block_split.module:120
+msgid "Title !i"
+msgstr ""
+
+#: menu_block_split.module:123
+msgid "Set the title of the resulting block."
+msgstr ""
+
+#: menu_block_split.module:49
+msgid "administer menu block split"
+msgstr ""
+
+#: menu_block_split.module:73
+msgid "Menu block split settings"
+msgstr ""
+
+#: menu_block_split.module:74
+msgid "Settings for Menu Block Split"
+msgstr ""
+
+#: menu_block_split.info:0
+msgid "Menu block split"
+msgstr ""
+
+#: menu_block_split.info:0
+msgid "Allow to have an splitted menu tree within two blocks"
+msgstr ""
+

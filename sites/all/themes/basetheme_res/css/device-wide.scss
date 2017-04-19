@@ -1,0 +1,16 @@
+/* Large screens ----------- > ~ 1366 blue */
+@media only all and (min-width : 1025px) {
+  body.sidebar-right {
+    background: #b9e1d6;
+    #content-inner, #content-top {
+      margin-right: 32.81%; /* 315px / 960px = 0.3281 */
+    }
+    #sidebar-right {
+      margin-left: -31.25%; /* 300px / 960px = 0.3125 */
+      width: 31.25%;
+    }
+  }
+}
+
+ 
+ 

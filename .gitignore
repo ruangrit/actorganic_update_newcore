@@ -1,0 +1,6 @@
+files/
+settings.php
+*.sql
+*.gz
+sites/all/modules/contrib/hacked
+*.swp

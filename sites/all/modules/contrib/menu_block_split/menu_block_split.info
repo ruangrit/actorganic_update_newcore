@@ -1,0 +1,11 @@
+; $Id: menu_block_split.info,v 1.2.6.2 2009/02/07 13:33:15 robertgarrigos Exp $
+
+name = Menu block split
+description = Allow to have an splitted menu tree within two blocks
+core = 6.x
+; Information added by drupal.org packaging script on 2010-05-31
+version = "6.x-2.3"
+core = "6.x"
+project = "menu_block_split"
+datestamp = "1275293408"
+

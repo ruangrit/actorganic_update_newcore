@@ -1,0 +1,13 @@
+/* Smartphones (portrait and landscape) ----------- pink */
+@media only all and (max-width: 480px) {
+	 body.sidebar-right {
+	    background: pink;
+	    #content-inner, #content-top {
+	      margin-right: 0;
+	    }
+	    #sidebar-right {
+	      margin-left: 0; 
+	      width: 100%;
+	    }
+	  }
+}

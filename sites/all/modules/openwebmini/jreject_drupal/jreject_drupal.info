@@ -1,0 +1,6 @@
+name = "jReject for Drupal"
+description = "(jreject_drupal.module) [Opendream] Create custom ajax layer to maintain JSON responses in various pages."
+core = "6.x"
+package = "Features"
+version = "6.x-1.0"
+project = "jreject_drupal"

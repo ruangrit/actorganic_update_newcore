@@ -1,0 +1,112 @@
+diff -ur conditional_fields/conditional_fields.module conditional_fields.new/conditional_fields.module
+--- conditional_fields/conditional_fields.module	2010-10-29 13:15:36.000000000 -0500
++++ conditional_fields.new/conditional_fields.module	2011-03-10 00:12:34.000000000 -0600
+@@ -309,6 +309,9 @@
+     case 'content_copy_import_form':
+       $form['#submit'][] = 'conditional_fields_import';
+       break;
++    case 'user_register':
++      conditional_fields_node_editing_form($form, $form_state);
++      break;
+   }
+ 
+   if (isset($form['type']['#value']) && $form_id == $form['type']['#value'] . '_node_form') {
+@@ -643,9 +646,42 @@
+   if ($form_state['clicked_button']['#ahah']) {
+     return $form;
+   }
++  // Find all content profile types used in this form
++  $form_ctypes = (array_key_exists('#content_profile_registration_use_types', $form) && is_array($form['#content_profile_registration_use_types'])) ?
++      array_keys($form['#content_profile_registration_use_types']) : array($form['type']['#value']);
++ 
++  $js_settings = array();
++  $ui_settings_type = NULL;
++  foreach($form_ctypes as $form_ctype) {
++    // Update the form & js settings for each content profile type
++    $form = conditional_fields_node_type_after_build($form, $form_state, $form_ctype, $js_settings);
++    // Use the user interface settings of the first content profile that has them.
++    if (! $ui_settings_type && variable_get('c_fields_js_' . $form_ctype, NULL))
++      $ui_settings_type = $form_ctype;
++  }
+ 
+-  $type_name = $form['type']['#value'];
++  // Hopefully, we found out above which content type has UI settings. Now, we'll use them.
++  $ui_settings = variable_get('c_fields_js_' . $ui_settings_type, C_FIELDS_JS_HIDE);
++  switch ($ui_settings) {
++    case C_FIELDS_JS_DISABLE:
++      $js_settings['ui_settings'] = 'disable';
++      break;
++    case C_FIELDS_JS_HIDE:
++      $js_settings['ui_settings']['animation'] = (int)variable_get('c_fields_animation_' . $ui_settings_type, C_FIELDS_ANIMATION_NO);
++      $js_settings['ui_settings']['anim_speed'] = variable_get('c_fields_anim_speed_' . $ui_settings_type, "normal");
++      break;
++  }
++
++  if ($ui_settings != C_FIELDS_JS_NO) {
++    conditional_fields_add_js($js_settings);
++  }
++
++  $form['#conditional_fields']['settings'] = $js_settings;
+ 
++  return $form;
++}
++
++function conditional_fields_node_type_after_build($form, &$form_state, $type_name, &$js_settings) {
+   // Do nothing if there are no conditional fields
+   if (!$data = conditional_fields_load_data($type_name)) {
+     return $form;
+@@ -655,7 +691,6 @@
+   $missing_controlling_fields = array();
+   $controlled_fields = array();
+   $required_fields = array();
+-  $js_settings = array();
+ 
+   foreach ($data as $row) {
+     $controlling_fields[$row['control_field_name']][$row['field_name']] = $row['trigger_values'];
+@@ -778,26 +813,9 @@
+     }
+   }
+ 
+-  // Apply user interface settings
+-  $ui_settings = variable_get('c_fields_js_' . $type_name, C_FIELDS_JS_HIDE);
+-  switch ($ui_settings) {
+-    case C_FIELDS_JS_DISABLE:
+-      $js_settings['ui_settings'] = 'disable';
+-      break;
+-    case C_FIELDS_JS_HIDE:
+-      $js_settings['ui_settings']['animation'] = (int)variable_get('c_fields_animation_' . $type_name, C_FIELDS_ANIMATION_NO);
+-      $js_settings['ui_settings']['anim_speed'] = variable_get('c_fields_anim_speed_' . $type_name, "normal");
+-      break;
+-  }
+-
+-  if ($ui_settings != C_FIELDS_JS_NO) {
+-    conditional_fields_add_js($js_settings);
+-  }
+-
+   // Pass variables for validation
+   $form['#conditional_fields']['data'] = $data;
+   $form['#conditional_fields']['required_fields'] = $required_fields;
+-  $form['#conditional_fields']['settings'] = $js_settings;
+ 
+   // Add validation function
+   $form['#validate'] = array_merge(array('conditional_fields_node_editing_form_validate'), (array)$form['#validate']);
+@@ -934,7 +952,7 @@
+       }
+       else {
+         // Do not submit values of controlled fields which were not triggered (except on preview)
+-        if (variable_get('c_fields_reset_default_' . $form['type']['#value'], 1)
++        if (variable_get('c_fields_reset_default_' . $type_name, 1)
+           && !in_array('node_form_build_preview', (array)$form_state['submit_handlers'])) {
+             // Load default values like in content_field_form() in content.node_form.inc
+             $controlled_field_info = $form['#field_info'][$controlled_field_name];
+@@ -965,8 +983,8 @@
+         }
+         else {
+           // Do not submit values of controlled fields which were not triggered (except on preview)
+-          if (variable_get('c_fields_reset_default_' . $form['type']['#value'], 1) &&
+-            !in_array('node_form_build_preview', $form_state['submit_handlers'])) {
++          if (variable_get('c_fields_reset_default_' . $type_name, 1) &&
++            !in_array('node_form_build_preview', (array)$form_state['submit_handlers'])) {
+               // Load default values like in content_field_form() in content.node_form.inc
+               $field_in_group_info = $form['#field_info'][$field_in_group];
+               if (content_callback('widget', 'default value', $field_in_group_info) != CONTENT_CALLBACK_NONE) {

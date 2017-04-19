@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * Implementation of hook_file_download().
+ */
+function download_count_image_file_download($filename) {
+  global $user;
+
+  // If extension is not allowed in download count.
+  $extensions = explode(' ', 'jpg jpeg gif png');
+  if (count($extensions)) {
+    $pathinfo = pathinfo($filename);
+    if (!in_array(drupal_strtolower($pathinfo['extension']), $extensions)) {
+      return;
+    }
+  }
+
+  $filepath = file_create_path($filename);
+
+  /**
+   * Fields support only multiple fields and used by 2-up content types.
+   */
+  $fields = array(
+    'field_resources',
+  );
+  
+  foreach ($fields as $field_name) {
+    $sql = "SELECT c.nid, c.vid, f.fid FROM {content_%s} c, {files} f ";
+    $sql .= "WHERE c.%s_fid = f.fid AND f.filepath = '%s'";
+    $fileinfo = db_fetch_object(db_query($sql, $field_name, $field_name, $filepath));
+
+    if ($fileinfo) {
+      $ip = ip_address();
+      $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : NULL;
+      $time = time();
+
+      db_query("INSERT INTO {download_count} (fid, nid, uid, vid, ip_address, referrer, timestamp) VALUES (%d, %d, %d, %d, '%s', '%s', %d)", $fileinfo->fid, $fileinfo->nid, $user->uid, $fileinfo->vid, $ip, $referrer, $time);
+      watchdog('download_count_image', '%file was downloaded', array('%file' => $filename), WATCHDOG_NOTICE);
+    }
+  }
+}

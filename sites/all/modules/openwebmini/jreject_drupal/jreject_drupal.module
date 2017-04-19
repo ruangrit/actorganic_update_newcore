@@ -1,0 +1,24 @@
+<?php
+// Call drupal_add_js() outside function would include javascripts in every pages.
+$image_path = drupal_get_path('module', 'jreject_drupal') . '/images/';
+
+$script = <<<INNERHTML
+$(document).ready( function() {
+  $.reject({
+    reject: {
+      msie7: true
+    },
+    imagePath: '{$image_path}',
+    header: 'บราวเซอร์ของคุณควรได้รับการอัพเกรด',
+    paragraph1: 'เว็บบราวเซอร์ของท่านตกรุ่น อาจทำงานได้ไม่ดีกับเว็บไซต์ของเรา ท่านสามารถดาวน์โหลดโปรแกรมรุ่นล่าสุดของเว็บบราวเซอร์ยี่ห้อต่างๆ ตามรายการที่แสดงด้านล่างนี้',
+    paragraph2: 'คลิกที่รูปไอคอนอันใดอันหนึ่งเพื่อไปยังหน้าดาวน์โหลด',
+    closeLink: 'คลิกที่นี่เพื่อปิดกรอบหน้าต่างนี้',
+    closeMessage: 'ท่านสามารถเลือกปิดกรอบหน้าต่างโดยไม่อัพเกรดได้ โดยยอมรับปัญหาที่อาจเกิดขึ้นขณะใช้งานเว็บไซต์',
+    closeCookie: true
+  });
+});
+
+INNERHTML;
+
+drupal_add_js(drupal_get_path('module', 'jreject_drupal') . '/jReject.jquery.js');
+drupal_add_js($script, 'inline');

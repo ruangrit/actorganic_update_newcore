@@ -1,0 +1,13 @@
+<?php
+
+function titleblock_block($op = 'list', $delta = 0, $edit = array()) {
+  if ($op == 'list') {
+    return array('title' => array('info' => 'Title Block'));
+  }
+  else if ($op == 'view') {
+    $title = drupal_get_title();
+    if ($title) {
+      return array('content' => '<h1 class="title">'.$title.'</h1>');
+    }
+  }
+}

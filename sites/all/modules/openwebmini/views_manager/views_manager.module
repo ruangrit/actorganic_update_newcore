@@ -1,0 +1,68 @@
+<?php
+
+function views_manager_menu() {
+  $items['admin/build/views/manager'] = array(
+    'title' => 'Views Manager', 
+    'description' => 'Views manager', 
+    'page callback' => 'drupal_get_form', 
+    'page arguments' => array('views_manager_form'), 
+    'access arguments' => array('administer views'), 
+  );
+  $items['admin/content/types/manager'] = array(
+    'title' => 'Content types Manager', 
+    'description' => 'Content types manager', 
+    'page callback' => 'drupal_get_form', 
+    'page arguments' => array('views_manager_type_form'), 
+    'access arguments' => array('administer content types'), 
+  );
+  return $items;
+}
+
+function views_manager_form(&$form_state) {
+  $views = views_get_all_views();
+  foreach ($views as $view) {
+    if ($view->type != t('Default')) {
+      $options[$view->name] = $view->name;
+    }
+  }
+  $form['views'] = array(
+    '#title' => 'Delete views',
+    '#type' => 'checkboxes',
+    '#options' => $options,
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => '!!! Delete (no confirm again) !!!'
+  );
+  return $form;
+}
+
+function views_manager_form_submit($form, $form_state) {
+  foreach (array_filter($form_state['values']['views']) as $view) {
+    $view = views_get_view($view);
+    $view->delete();
+    views_object_cache_clear('view', $view->name);
+  }
+  drupal_set_message(t('Views has been deleted.'));
+}
+
+function views_manager_type_form(&$form_state) {
+  $options = node_get_types('names');
+  $form['types'] = array(
+    '#title' => 'Delete content type',
+    '#type' => 'checkboxes',
+    '#options' => $options,
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => '!!! Delete (no confirm again) !!!'
+  );
+  return $form;
+}
+
+function views_manager_type_form_submit($form, $form_state) {
+  foreach (array_filter($form_state['values']['types']) as $type) {
+    node_type_delete($type);
+  }
+  drupal_set_message(t('Types has been deleted.'));
+}

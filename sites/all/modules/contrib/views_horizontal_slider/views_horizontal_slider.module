@@ -1,0 +1,41 @@
+<?php
+// $Id: views_horizontal_slider.module,v 1.2 2010/07/31 12:56:58 eanima Exp $
+
+/**
+ * @file
+ * Main Module
+*/
+
+/**
+ * Implementation of hook_views_api().
+ */
+function views_horizontal_slider_views_api() {
+  return array(
+    'api' => 2.0,
+  );
+}
+
+/* add the actual inline lightweight jquery script */
+
+function views_horizontal_slider_add_js($options) {
+$script = "    
+  $(document).ready(function(){
+    startId = " . check_plain($options['start_id']) . ";
+    lastBlock = $('.views_horizontal_slider ul li.hitem-'+startId);    
+    
+    maxWidth = " . check_plain($options['max_width']) . ";
+    minWidth = " . check_plain($options['min_width']) . ";
+    $('.views_horizontal_slider ul li').width(minWidth+'px');    
+    $(lastBlock).width(maxWidth+'px');    
+    
+    $('.views_horizontal_slider ul li').hover(
+      function(){
+        $(lastBlock).animate({width: minWidth+'px'}, { queue:false, duration:" . check_plain($options['animate_in']) . " });
+        $(this).animate({width: maxWidth+'px'}, { queue:false, duration:" . check_plain($options['animate_out']) . "});
+        lastBlock = this;
+      }
+      );
+  });
+";
+  drupal_add_js($script, 'inline');
+}

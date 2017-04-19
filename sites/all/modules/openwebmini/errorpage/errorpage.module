@@ -1,0 +1,83 @@
+<?php
+
+function errorpage_menu() {
+  $items['admin/settings/errorpage'] = array(
+    'title' => 'Error Page', 
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('errorpage_settings_form'),
+    'access arguments' => array('access administration pages'),
+  );
+  return $items;
+}
+
+function errorpage_settings_form() {
+  $theme_default = variable_get('theme_default', 'opentheme');
+  $mpath = drupal_get_path('module', 'errorpage');
+  $form['region'] = array(
+    '#type' => 'fieldset',
+    '#title' => 'Show regions',
+  );
+  $form['region']['errorpage_show_region'] = array(
+    '#type' => 'checkboxes',
+    '#options' => system_region_list($theme_default),
+    '#default_value' => variable_get('errorpage_show_region', array('content' => 'content', 'header' => 'header', 'footer' => 'footer')),
+  );
+
+  foreach(glob($mpath.'/images/404/*.png') as $filename) {
+    $options404[$filename] = '<span>'.theme('image', $filename).'</span>';
+  }
+  $form['404'] = array(
+    '#type' => 'fieldset',
+    '#title' => '404: Page not found',
+  );
+  $form['404']['errorpage_404'] = array(
+    '#type' => 'radios',
+    '#options' => $options404,
+    '#default_value' => variable_get('errorpage_404', ''),
+  );
+
+  foreach(glob($mpath.'/images/403/*.png') as $filename) {
+    $options403[$filename] = '<span>'.theme('image', $filename).'</span>';
+  }
+  $form['403'] = array(
+    '#type' => 'fieldset',
+    '#title' => '403: Access denine',
+  );
+  $form['403']['errorpage_403'] = array(
+    '#type' => 'radios',
+    '#options' => $options403,
+    '#default_value' => variable_get('errorpage_403', ''),
+  );
+
+  return system_settings_form($form);
+}
+
+function errorpage_preprocess_page(&$vars) {
+  $theme_default = variable_get('theme_default', 'opentheme');
+  $headers = drupal_get_headers();
+  if (strpos($headers, '404 Not Found') !== FALSE || strpos($headers, '403 Forbidden') !== FALSE) {
+
+    foreach (system_region_list($theme_default) as $region => $name) {
+      $allow = array_filter(variable_get('errorpage_show_region', array('content' => 'content', 'header' => 'header', 'footer' => 'footer')));
+      if (!in_array($region, $allow)) {
+        $vars[$region] = '';
+      }
+    }
+
+    if (strpos($headers, '404 Not Found') !== FALSE) {
+      $vars['content'] = errorpage_get_404();
+    }
+    else if (strpos($headers, '403 Forbidden') !== FALSE) {
+      $vars['content'] = errorpage_get_403();
+    }
+  }
+
+}
+
+function errorpage_get_404() {
+  return theme('image', variable_get('errorpage_404', ''));
+}
+
+function errorpage_get_403() {
+  return theme('image', variable_get('errorpage_403', ''));
+}

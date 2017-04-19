@@ -1,0 +1,12 @@
+ul.views-showup {
+	position: absolute;
+	z-index: 9;
+	overflow: hidden;
+}
+
+ul.views-showup li {
+	float: left;
+	width: 200px; /* default */
+	position: relative;
+	text-align: center;
+}

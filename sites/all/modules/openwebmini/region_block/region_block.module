@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Implements hook_form_alter().
+ */
+function region_block_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'block_admin_configure') {
+    $theme_default = variable_get('theme_default', '');
+    // Get admin theme.
+    $admin_theme = variable_get('admin_theme', '');
+    // Get previous region.
+    $default = db_result(db_query("SELECT region FROM {blocks} WHERE module = '%s' AND delta = '%s' AND theme = '%s'", $form['module']['#value'], $form['delta']['#value'], $theme_key));
+    // Region form fieldset.
+    $form['region_block'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Region settings'),
+      '#description' => t('Specify in which themes and regions this block is displayed.'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+      '#weight' => 0,
+      '#tree' => TRUE,
+    );
+    // List themes.
+    foreach (list_themes() as $key => $theme) {
+      if ($theme->status == 1 || $key == $admin_theme) {
+        // Retrieve regions.
+        $regions = array(BLOCK_REGION_NONE => t('- None -')) + system_region_list($key);
+        // Get theme regions settings.
+        $defaults = db_result(db_query("SELECT region FROM {blocks} WHERE module = '%s' AND delta = '%s' AND theme = '%s'", $form['module']['#value'], $form['delta']['#value'], $key));
+        // Generate title.
+        $title = $theme->info['name'];
+        if ($key == $theme_default) {
+          // Default theme.
+          $title .= ' (default theme)';
+        }
+        elseif ($key == $admin_theme) {
+          // Admin theme.
+          $title .= ' (administration theme)';
+        }
+        // Make form.
+        $form['region_block'][$key] = array(
+          '#type' => 'select',
+          '#title' => $title,
+          '#options' => $regions,
+          '#default_value' => $defaults,
+        );
+      }
+    }
+    // Submit callback.
+    $form['#submit'][] = 'region_block_form_submit';
+  }
+}
+
+/**
+ * Form submit.
+ */
+function region_block_form_submit($form, $form_state) {
+  $values = $form_state['values'];
+  foreach ($values['region_block'] as $theme => $region) {
+    // Region is disabled.
+    if (empty($region)) {
+      db_query("UPDATE {blocks} SET region = '', status = 0 WHERE module = '%s' AND delta = '%s' AND theme = '%s'", $values['module'], $values['delta'], $theme);
+    }
+    // Update new region.
+    else {
+      db_query("UPDATE {blocks} SET region = '%s', status = 1 WHERE module = '%s' AND delta = '%s' AND theme = '%s'", $region, $values['module'], $values['delta'], $theme);
+    }
+  }
+}

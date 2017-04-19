@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * Implemntation of hook_nodeapi().
+ */
+function calendar_systems_fix_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
+  global $language;
+  if ($op == 'presave' && $language->prefix == 'th' && $node->date) {
+    $calendar_system = db_result(db_query("SELECT calendar_system FROM {calendar_systems} WHERE language = '%s'", $language->prefix));
+    if ($calendar_system == 'thai') {
+      $date_parts = explode(' ', $node->date);
+      $date = explode('-', $date_parts[0]);
+      // Convert to GMT year format.
+      $date[0] = $date[0] - 543;
+      $date_parts[0] = implode('-', $date);
+      $node->date = implode(' ', $date_parts);
+      $node->created = strtotime($node->date);
+    }
+  }
+}

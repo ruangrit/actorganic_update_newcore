@@ -1,0 +1,91 @@
+/*......................................................................... 
+    Project:			BaseTheme for Openwebmini
+	  Version:			1.0
+	  File:         	base.css
+	  copyright:	  since 2011 Opendream Co., Ltd.
+	......................................................................... */
+	
+@import "style-scss";
+@import url(reset.css);
+@import url(default.css);
+@import url(layout.css);
+@import url(style-views.css);
+@import url(edit-links.css);
+@import url(mobile.css) screen and (max-device-width: 480px);
+
+/**
+ *
+ * calculator help "px" to "em" - http://riddle.pl/emcalc/
+ *
+ */
+
+
+/*********************************************************
+*                                            BODY
+**********************************************************/
+
+body {
+  font-family: Thonburi, Helvetica, Tahoma, sans-serif;
+  color: #333; 
+  line-height: 1.5em;
+  font-size: 80%;
+}
+
+a {
+  text-decoration: none;
+  color: #2d87cc;
+  &:link {
+    color: #2d87cc; 
+  }
+  &:hover, &.active, &:active {
+    color: #3B5998;
+    text-decoration: underline; 
+  }
+  &:focus {
+    border: none; 
+    outline: thin dotted; } 
+  }
+
+li a.active {
+  color: #3B5998;
+  text-decoration: none; 
+}
+
+/* Selection colours */
+  
+::selection 	 	{background: rgb(255,255,158);}
+::-moz-selection 	{background: rgb(255,255,158);}
+img::selection 		{background: transparent;}
+img::-moz-selection	{background: transparent;}
+body {-webkit-tap-highlight-color: rgb(255,255,158);}
+
+
+h1, h2, h3, h4, h5, h6 {margin: 0 0 10px; line-height: 1.5em;}
+h1 {
+  font-size: 27px;
+  line-height: 1.7em;
+}
+
+h2 {
+  font-size: 25px;
+}
+
+h3 {
+  font-size: 21px;
+}
+
+h4 {
+  font-size: 19px;
+}
+
+h5 {
+  font-size: 17px;
+}
+
+h6 {
+  font-size: 15px;
+}
+
+p {
+  margin: 0 0 10px; 
+}

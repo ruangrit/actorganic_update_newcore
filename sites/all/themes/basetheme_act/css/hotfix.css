@@ -1,0 +1,33 @@
+/* Create new style, mapped to user-input from wysiwyg editor. */
+.standard th p {
+  display: block;
+  width: 70px;
+  height: 65px;
+  padding-left: 20px; 
+}
+.standard th img {
+  display: block;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+/* Update existing related styles */
+.standard .topic {
+  padding-top: 96px;
+}
+.standard tr {
+  width: auto;
+}
+
+/* Disable existing related styles */
+.standard th span {
+  display: inline;
+  width: auto;
+  height: auto;
+  padding-left: 0;
+}
+.standard .cols-row {
+  padding-bottom: 0;
+}
+.standard thead th {
+  padding: 0;
+}

@@ -1,0 +1,25 @@
+div#browser-warning {
+  z-index: 999;
+  border: 1px solid #CCC;
+  background: #FFF;
+  margin: 0 auto;
+}
+
+body.browser-warning { position: relative; }
+
+div#browser-warning a.close-button {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
+
+div#browser-warning div.message {
+
+}
+
+/*
+* ie wranning
+*/
+
+#ie6Warning .icon {float: left; padding: 0 10px 0 0; text-align: center;}
+#browser-warning .messages {background: #fff;}

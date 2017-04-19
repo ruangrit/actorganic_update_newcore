@@ -1,0 +1,63 @@
+/*......................................................................... 
+    Project:				Responsive BaseTheme for Openwebmini
+	  Version:				1.0
+	  File:         		layout.scss
+	  copyright:	  	since 2011 Opendream Co., Ltd.
+	......................................................................... */
+
+
+/*********************************************************
+*                          Theme Responsive Design
+*                                  Default Layout
+**********************************************************/
+
+/* layout 1 right sidebar */
+body.sidebar-right {  
+  background: #35addc;
+    #content-inner, #content-top {
+      margin-right: 32.81%; /* 315px / 960px = 0.3281 */
+    }
+    #sidebar-right {
+      margin-left: -31.25%; /* 300px / 960px = 0.3125 */
+      width: 31.25%;
+    }
+}
+
+/* layout 1 left sidebar */
+body.sidebar-left {
+  #content-inner, #content-top {
+    margin-left: 32.81%;
+  }
+  #sidebar-left {
+    margin-left: -100%;
+    width: 31.25%;
+  }
+}
+
+/* layout 2 left - right sidebar */
+body.two-sidebars {
+  background: #f2f0e4;
+  #content-inner, #content-top {
+    margin: 0 26.56%; /* sidebar width - margin (between content & sidebar) / page width */ 
+  }
+  #sidebar-left {
+    margin-left: -100%;
+    width: 25%; /* 240px / 960px = 0.25 */ 
+  }
+  #sidebar-right {
+    margin-left: -25%;
+    width: 25%;
+  }
+}
+
+
+
+
+/* img */
+
+.node img{
+  max-width:98%;
+  width: 98%; /* fore IE */
+  padding:1%; /* A percentage that, when doubled and added to the above, makes 100%. */
+  background: #c7af4f; /* Color of the faux border. */
+}

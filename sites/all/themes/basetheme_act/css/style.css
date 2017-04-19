@@ -1,0 +1,1067 @@
+/*......................................................................... 
+    Project:   BaseTheme - ACT
+    Version:   1.1
+    File:      style.css
+    copyright: Since 2012 Opendream Co., Ltd.
+    By:        Chatchai Tutiyanond
+......................................................................... */
+/*********************************************************
+						READ ME
+**********************************************************/
+/* You must read this before you write to understand my code
+
+1. Write @import CSS, $var, @mixin in (1)first section only
+2. (2)Base Style is style on HTML Elements, Form, Components(reuse class), Container, etc
+3. (6)View - View block in here
+4. (7)Block - block in here */
+/*********************************************************
+						READ ME
+**********************************************************/
+/* Table of CSS Section
+---------------------------------------------------------*/
+/*
+	1. All @import CSS, All $var, All @mixin
+	2. Base Style
+	3. Navigation
+	4. Global View
+	5. Global Block
+	6. View
+	7. Block
+	8. Nodes
+*/
+/*********************************************************
+		1. All @import CSS, All $var, All @mixin
+**********************************************************/
+/*--- Import ---*/
+/* @include border(1px, solid, #000, 5px) */
+/* variable */
+/* All color of text */
+/* c = color */
+               /*
+
+$color_text: red; 
+$color_sologan: #000;
+$color_footer: #000;
+$color_date: #000;
+
+$color_link: #000; 
+$color_hover_link: #000; 
+$color_nav_link: #000;
+$color_nav_hover_link: #000;
+$color_more_link: #000;
+$color_more_hover_link: #000;
+$color_footer_link: #000;
+$color_footer_hover_link: #000;
+
+$color_title: #000;
+$color_title_footer: #000;
+$color_h1: #000;
+$color_h2: #000;
+$color_header: #0b528d; 
+$color_desc: #999; 
+$color_body: #f1f1f1; 
+$color_border: #ccc; */
+/*
+$size: 30px;
+
+$fontsize: $size; 
+$fontfamily: $family;
+$fontsize_heading: $size;
+*/
+/*Var*/
+/*--- Base Vars ---*/
+/* Text Color */
+/* Link Color */
+/*Nav Color*/
+/* Footer Link color */
+/* Heading h1,h2.h3,.. */
+/* Background Color */
+/* rgba(255, 255, 255, 0.67) */
+/* Default font */
+/*--- Mixin ---*/
+/*********************************************************
+						2. Base Style
+**********************************************************/
+/*--- @font-face ---*/
+@font-face {
+  font-family: 'DBMomentXRegular';
+  src: url("../fonts/db_moment_x-webfont.eot");
+  src: url("../fonts/db_moment_x-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/db_moment_x-webfont.woff") format("woff"), url("../fonts/db_moment_x-webfont.ttf") format("truetype"), url("../fonts/db_moment_x-webfont.svg#DBMomentXRegular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'DBMomentXThinThin';
+  src: url("../fonts/db_moment_x_thin-webfont.eot");
+  src: url("../fonts/db_moment_x_thin-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/db_moment_x_thin-webfont.woff") format("woff"), url("../fonts/db_moment_x_thin-webfont.ttf") format("truetype"), url("../fonts/db_moment_x_thin-webfont.svg#DBMomentXThinThin") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/*--- HTML Elelments ---*/
+/* line 144, style.scss */
+body#base-fixed {
+  font: lighter 20px/1.2em DBMomentXRegular, Helvetica, Thonburi, Tahoma, sans-serif;
+  color: #333333;
+  background: #553623 url("../images/bg.jpg") repeat-x;
+}
+/* line 148, style.scss */
+body#base-fixed.admin-menu {
+  background-position: 0 35px;
+}
+
+/* line 153, style.scss */
+a {
+  color: #af7f20;
+}
+/* line 155, style.scss */
+a:link {
+  color: #af7f20;
+}
+/* line 156, style.scss */
+a:hover, a.active, a:active {
+  color: #cc9933;
+}
+
+/* line 161, style.scss */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 28px;
+  color: #2b2b2b;
+}
+
+/*--- Components ---*/
+/* line 169, style.scss */
+.btn-green, .our-service-front-block .views-field-field-url-value a {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  display: inline-block;
+  color: #ccff66;
+  font-size: 24px;
+  text-align: center;
+  border: 1px solid #a6bf52;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #728f00), color-stop(1, #517f0b));
+  background: -moz-linear-gradient(center top, #728f00 5%, #517f0b 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#728f00', endColorstr='#517f0b');
+  background-color: #728f00;
+  -webkit-box-shadow: inset 0px 0px 16px -4px #faffde;
+  -moz-box-shadow: inset 0px 0px 16px -4px #faffde;
+  box-shadow: inset 0px 0px 16px -4px #faffde;
+  text-shadow: 1px 1px 0px #383538;
+}
+
+/*--- Form ---*/
+/* line 187, style.scss */
+input.form-text {
+  font-size: 14px;
+}
+
+/*--- Header Section ---*/
+/* line 192, style.scss */
+#header-wrapper {
+  padding: 0px;
+  margin: 0;
+}
+
+/* line 196, style.scss */
+#header {
+  position: relative;
+  height: 430px;
+}
+
+/* line 200, style.scss */
+#branding {
+  position: relative;
+  top: 0;
+  left: 270px;
+  width: 416px;
+  height: 260px;
+}
+
+/* line 208, style.scss */
+.not-front #main-content {
+  font: 14px/1.5em Helvetica, Thonburi, Tahoma, sans-serif;
+}
+/* line 210, style.scss */
+.not-front #main-content h2 {
+  font: 37px/1.2em DBMomentXRegular, Helvetica, Thonburi, Tahoma, sans-serif;
+}
+
+/*--- #content-top ---*/
+/* line 217, style.scss */
+#content-top {
+  padding: 15px 20px 0;
+  background: white;
+}
+
+/*--- #content-top ---*/
+/* line 224, style.scss */
+.not-front #feature {
+  width: auto !important;
+  padding: 20px !important;
+  margin-bottom: 15px !important;
+  background: white;
+}
+
+/*--- #content-inner ---*/
+/* line 233, style.scss */
+#content-inner {
+  background: white;
+  border-radius: 10px;
+}
+/* line 236, style.scss */
+.not-front #content-inner {
+  padding: 0 20px 20px;
+}
+/* line 239, style.scss */
+.node-type-certification-page #content-inner {
+  padding: 20px;
+}
+
+/* line 244, style.scss */
+.page-contact #content {
+  background: #fff;
+}
+
+/*--- Content Bottom ---*/
+/* line 250, style.scss */
+#content-bottom {
+  padding: 40px 20px;
+  background: #99ba27;
+}
+/* line 253, style.scss */
+#content-bottom .block {
+  float: left;
+  margin: 0;
+  clear: none;
+}
+
+/*--- Footer Section ---*/
+/* line 261, style.scss */
+#footer {
+  position: relative;
+}
+/* line 263, style.scss */
+#footer .block .content {
+  font-family: DBMomentXThinThin;
+  font-size: 22px;
+  color: #ad816b;
+}
+
+/*--- Sidebar Section ---*/
+/* line 271, style.scss */
+.sidebar {
+  padding-bottom: 20px;
+  background: white;
+  border-radius: 10px;
+}
+/* line 275, style.scss */
+.sidebar .block {
+  margin-bottom: 0;
+}
+/* line 277, style.scss */
+.sidebar .block h2 {
+  padding: 10px 20px 0;
+  margin: 0;
+}
+/* line 281, style.scss */
+.sidebar .block .content {
+  padding: 0 20px 0px;
+  background: white;
+}
+
+/*********************************************************
+						3. Nav
+**********************************************************/
+/* line 292, style.scss */
+.nav h2 {
+  position: absolute;
+  left: -999em;
+}
+/* line 296, style.scss */
+.nav .content a {
+  color: white;
+}
+/* line 298, style.scss */
+.nav .content a:hover {
+  color: #99cc33;
+  text-decoration: none;
+}
+
+/*--- Primary Nav with submenu ---*/
+/* line 308, style.scss */
+#block-nice_menus-1 {
+  position: relative;
+  top: 33px;
+  width: 945px;
+  height: 106px;
+  margin: 0;
+  font-size: 30px;
+  background: url("../images/nav.png") no-repeat;
+  z-index: 9999;
+}
+/* line 318, style.scss */
+#block-nice_menus-1 .content .nice-menu {
+  float: left;
+  margin: 33px 0 0 20px;
+}
+/* line 323, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li {
+  display: inline;
+  float: left;
+  margin: 0;
+  padding: 0 34px;
+  border-right: 1px solid #000;
+  border-left: 1px solid #735b46;
+}
+/* line 330, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li ul {
+  background: none;
+  font-size: 25px;
+  border: none;
+}
+/* line 334, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li ul li {
+  background: none;
+  padding: 0;
+  border: none;
+  width: 8.5em;
+}
+/* line 339, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li ul li a {
+  background: #5f361f;
+  border-bottom: 1px solid #654608;
+}
+/* line 342, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li ul li a:hover {
+  background: #442514;
+}
+/* line 343, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li ul li a.active {
+  background: #5f361f;
+}
+/* line 350, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li a {
+  -webkit-text-shadow: 2px 4px 4px black;
+  -moz-text-shadow: 2px 4px 4px black;
+  text-shadow: 2px 4px 4px black;
+  background: none;
+  border: none;
+  padding: 0;
+  color: white;
+}
+/* line 356, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li a:hover {
+  background: none;
+  color: #99cc33;
+}
+/* line 360, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li a.active {
+  color: #99cc33;
+  background: none;
+}
+/* line 365, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li.first {
+  border-left: none;
+}
+/* line 368, style.scss */
+#block-nice_menus-1 .content ul.nice-menu li.last {
+  border-right: none;
+}
+
+/*--- Primary Nav ---*/
+/* line 380, style.scss */
+#block-menu_block-4 {
+  position: relative;
+  top: 33px;
+  width: 945px;
+  height: 136px;
+  margin: 0;
+  font-size: 30px;
+  background: url("../images/nav.png") no-repeat;
+}
+/* line 389, style.scss */
+#block-menu_block-4 .content .menu {
+  float: left;
+  margin: 55px 0 0 20px;
+}
+/* line 393, style.scss */
+#block-menu_block-4 .content li {
+  display: inline;
+  float: left;
+  margin: 0;
+  padding: 0 40px;
+  border-right: 1px solid #000;
+  border-left: 1px solid #735b46;
+}
+/* line 400, style.scss */
+#block-menu_block-4 .content li a {
+  -webkit-text-shadow: 2px 4px 4px black;
+  -moz-text-shadow: 2px 4px 4px black;
+  text-shadow: 2px 4px 4px black;
+}
+/* line 402, style.scss */
+#block-menu_block-4 .content li a.active {
+  color: #99cc33;
+}
+/* line 406, style.scss */
+#block-menu_block-4 .content li.first {
+  border-left: none;
+}
+/* line 409, style.scss */
+#block-menu_block-4 .content li.last {
+  border-right: none;
+}
+
+/*--- Secondary Nav ---*/
+/* line 417, style.scss */
+#block-menu-secondary-links {
+  float: left;
+  width: 550px;
+  margin-bottom: 40px !important;
+}
+/* line 422, style.scss */
+#block-menu-secondary-links .menu li {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+/* line 427, style.scss */
+#block-menu-secondary-links .menu a {
+  float: left;
+  margin: 0 10px 0 0;
+  padding: 0 10px 0 0;
+  border-right: 1px solid #fff;
+  line-height: 10px;
+}
+
+/*--- Menu Sidebar ---*/
+/* line 440, style.scss */
+.menu-sidebar .view-content .item-list ul {
+  padding: 0 0 0 1em;
+}
+/* line 443, style.scss */
+.menu-sidebar .view-content .views-row {
+  list-style: disc;
+  margin: 0 0 4px 0.5em;
+}
+
+/*********************************************************
+					4. Global View
+**********************************************************/
+/* line 455, style.scss */
+.view-news .view-content .views-row, .view-article .view-content .views-row, .view-taxonomy .view-content .views-row {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+/* line 92, style.scss */
+.view-news .view-content .views-row:after, .view-article .view-content .views-row:after, .view-taxonomy .view-content .views-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 87, style.scss */
+.view-news .view-content .views-row, .view-article .view-content .views-row, .view-taxonomy .view-content .views-row {
+  display: block;
+}
+/* line 459, style.scss */
+.view-news .view-content .views-field-title, .view-article .view-content .views-field-title, .view-taxonomy .view-content .views-field-title {
+  font-size: 20px;
+  line-height: 1.5em;
+}
+/* line 463, style.scss */
+.view-news .view-content .views-field-field-image-fid img, .view-article .view-content .views-field-field-image-fid img, .view-taxonomy .view-content .views-field-field-image-fid img {
+  margin: 0 15px 15px 0;
+}
+/* line 466, style.scss */
+.view-news .view-content .views-field-body, .view-article .view-content .views-field-body, .view-taxonomy .view-content .views-field-body {
+  margin: 0 0 10px;
+}
+/* line 469, style.scss */
+.view-news .view-content a, .view-article .view-content a, .view-taxonomy .view-content a {
+  color: #af7f20;
+}
+
+/*--- Pager on View ---*/
+/* line 478, style.scss */
+.item-list ul.pager li {
+  background: white;
+}
+/* line 479, style.scss */
+.item-list ul.pager li a {
+  color: #af7f20;
+}
+/* line 483, style.scss */
+.item-list ul.pager li.pager-current {
+  color: #999;
+  background: white;
+}
+/* line 487, style.scss */
+.item-list ul.pager li:hover {
+  background: white;
+}
+
+/*********************************************************
+					5. Global Block
+**********************************************************/
+/*--- Block Edit Section ---*/
+/* line 499, style.scss */
+div.block div.block-edit {
+  font-size: 12px;
+}
+
+/*--- Local-tasks Section ---*/
+/* line 504, style.scss */
+.local-tasks {
+  margin-bottom: 10px;
+}
+
+/*--- Breadcrumb Section ---*/
+/* line 509, style.scss */
+#breadcrumb {
+  /*display: none;*/
+  margin-top: 0;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #EAEAEA;
+}
+
+/* line 517, style.scss */
+.breadcrumb {
+  padding: 4px 20px;
+}
+
+/* line 521, style.scss */
+.slide-title {
+  font-size: 28px;
+  margin: 0 0 10px;
+}
+
+/* line 525, style.scss */
+.slide-teaser {
+  font: 14px/1.5em Helvetica, Thonburi, Tahoma, sans-serif;
+}
+
+/* line 527, style.scss */
+.node_translation_en, .node_translation_th {
+  display: none !important;
+}
+
+/*********************************************************
+					6. View Blocks
+**********************************************************/
+/*--- Front Page Slideshow View ---*/
+/* line 536, style.scss */
+#block-views-front_slide-block_1 {
+  position: relative;
+  margin: 0 0 20px;
+}
+/* line 539, style.scss */
+#block-views-front_slide-block_1 .nivo-caption {
+  width: 930px;
+  padding: 15px;
+}
+/* line 543, style.scss */
+#block-views-front_slide-block_1 .view-footer {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 9999;
+  padding: 2px 7px;
+  background: #fff;
+}
+/* line 551, style.scss */
+#block-views-front_slide-block_1 .nivo-caption {
+  padding-bottom: 30px;
+}
+/* line 554, style.scss */
+#block-views-front_slide-block_1 .nivo-controlNav {
+  position: absolute;
+  bottom: 15px;
+  left: 430px;
+}
+/* line 558, style.scss */
+#block-views-front_slide-block_1 .nivo-controlNav a {
+  width: 15px;
+  height: 15px;
+  overflow: hidden;
+  margin-right: 8px;
+  background: url("../images/slide-nav.png") no-repeat left top;
+}
+/* line 564, style.scss */
+#block-views-front_slide-block_1 .nivo-controlNav a.active {
+  background-position: -15px 0;
+}
+
+/*--- FAQ Overview page View ---*/
+/* line 574, style.scss */
+.view-image-block .view-content .views-field-body {
+  float: left;
+  width: 600px;
+}
+/* line 579, style.scss */
+.page-faq .view-image-block .view-content .views-field-field-image-single-fid {
+  float: right;
+  margin: 0 40px 0 0;
+}
+/* line 585, style.scss */
+.view-image-block .view-footer {
+  clear: both;
+}
+
+/*--- FAQ List View ---*/
+/* line 593, style.scss */
+.view-faq .views-accordion-item .accordion-header {
+  padding-left: 60px;
+  background: #fbfbfb url("../images/ic-question.png") 12px 8px no-repeat;
+  border-top: none;
+}
+/* line 597, style.scss */
+.view-faq .views-accordion-item .accordion-header a {
+  color: #333333;
+}
+/* line 600, style.scss */
+.view-faq .views-accordion-item .accordion-header .totalcount {
+  color: #333333;
+}
+/* line 604, style.scss */
+.view-faq .views-accordion-item .accordion-content {
+  color: #333333;
+}
+/* line 607, style.scss */
+.view-faq .views-accordion-item .accordion-header-hover {
+  border-bottom: 1px solid #ccc;
+}
+
+/*--- Download List View ---*/
+/* line 615, style.scss */
+.view-download-list .attachment {
+  padding-bottom: 15px;
+}
+/* line 618, style.scss */
+.view-download-list li.views-row {
+  margin-bottom: 15px !important;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+/* line 623, style.scss */
+.view-download-list .views-field-phpcode, .view-download-list .views-field-field-attachments-data {
+  color: #999;
+  font-size: 16px;
+}
+
+/*********************************************************
+						7. Blocks
+**********************************************************/
+/*--- Front Page Certification Service Block ---*/
+/* line 633, style.scss */
+.certification-services {
+  padding: 20px 20px 0;
+  margin: 0 !important;
+  position: relative;
+}
+/* line 634, style.scss */
+.certification-services h2 {
+  position: absolute;
+  left: -999em;
+}
+
+/*--- Table Standart ---*/
+/* line 643, style.scss */
+.standard {
+  margin-bottom: 0;
+  border-collapse: collapse;
+  border: none;
+  text-align: center;
+  color: #cc6600;
+  font: 20px/1.2em DBMomentXRegular, Helvetica, Thonburi, Tahoma, sans-serif;
+}
+
+/*--- Cols Row ---*/
+/* line 652, style.scss */
+.standard .cols-row {
+  padding-bottom: 20px;
+}
+
+/* line 655, style.scss */
+.standard .topic {
+  padding-top: 75px;
+}
+
+/*--- Table Row ---*/
+/* line 660, style.scss */
+.standard tr {
+  display: block;
+  float: left;
+  width: 900px;
+  background: url("../images/line.png") no-repeat 300px center;
+}
+
+/* line 666, style.scss */
+.standard thead tr {
+  color: #cc9933;
+  background: transparent;
+}
+
+/* line 670, style.scss */
+.standard td, .standard th, .standard thead th {
+  padding: 10px 0;
+  border: none;
+  background: none;
+}
+
+/* line 675, style.scss */
+.standard td, .standard th {
+  display: inline-block;
+  float: left;
+  width: 92px;
+  background: none !important;
+}
+
+/* line 681, style.scss */
+.standard .right {
+  width: 250px;
+  font-size: 24px;
+  text-align: right;
+}
+
+/* line 686, style.scss */
+.standard th.right {
+  font-size: 30px;
+}
+
+/* line 689, style.scss */
+.standard th span {
+  display: block;
+  width: 70px;
+  height: 65px;
+  padding-left: 20px;
+}
+
+/*--- Table Icon ---*/
+/* line 697, style.scss */
+.standard th .cols, .standard .pass {
+  display: block;
+  overflow: hidden;
+  width: 30px;
+  height: 25px;
+  margin: 0 auto;
+  margin-left: 40px;
+  padding: 0;
+  text-indent: -9999em;
+  background: url("../images/ic-dotted.png") no-repeat;
+}
+
+/* line 708, style.scss */
+.standard .pass {
+  width: 30px;
+  height: 31px;
+  background-position: 0 -25px;
+}
+/* line 712, style.scss */
+.standard .pass:hover {
+  background-position: 0 -56px;
+}
+
+/*--- Front Page 3 items Block ---*/
+/* line 719, style.scss */
+.our-service-front-block,
+.faq-front-block {
+  width: 250px;
+  min-height: 305px;
+  height: auto !important;
+  height: 305px;
+}
+/* line 724, style.scss */
+.our-service-front-block h2,
+.faq-front-block h2 {
+  position: absolute;
+  left: -999em;
+}
+/* line 727, style.scss */
+.our-service-front-block .view-footer a,
+.faq-front-block .view-footer a {
+  color: #ffff66;
+}
+
+/* line 731, style.scss */
+.faq-front-block {
+  padding-left: 25px;
+  /*	border-left: 1px solid #b9d94a;*/
+}
+
+/* line 735, style.scss */
+.news-front-block {
+  width: 300px;
+  min-height: 305px;
+  height: auto !important;
+  height: 305px;
+  padding: 0 30px;
+  background: url("../images/border.png") repeat-y;
+  /*	border-left: 1px solid #b9d94a;
+  	border-right: 1px solid #70871d;*/
+  font-size: 22px;
+}
+/* line 745, style.scss */
+.news-front-block h2 {
+  color: #fff;
+  font-size: 32px;
+}
+/* line 749, style.scss */
+.news-front-block a {
+  color: #ffff66 !important;
+}
+/* line 753, style.scss */
+.news-front-block .view-news ul {
+  border-bottom: 1px dotted #fff;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+/* line 761, style.scss */
+.news-front-block .view-news .views-row {
+  padding-left: 20px;
+  background: url("../images/ic-list.png") no-repeat 0 5px;
+}
+/* line 764, style.scss */
+.news-front-block .view-news .views-row .views-field-title {
+  font: 14px/1.5em Helvetica, Thonburi, Tahoma, sans-serif;
+}
+/* line 772, style.scss */
+.news-front-block .more-link a {
+  display: block;
+  padding-right: 30px;
+  background: url("../images/ic-list.png") no-repeat right -98px;
+}
+
+/* line 779, style.scss */
+.our-service-front-block {
+  padding-right: 25px;
+  /*	border-right: 1px solid #70871d;*/
+}
+/* line 782, style.scss */
+.our-service-front-block .view-content {
+  text-align: center;
+}
+/* line 786, style.scss */
+.our-service-front-block .views-field-field-url-value a {
+  width: 140px;
+  margin: 0 auto;
+  padding: 7px 20px;
+}
+/* line 793, style.scss */
+.our-service-front-block .view-footer {
+  clear: both;
+}
+
+/*--- Facebook Block ---*/
+/* line 799, style.scss */
+.fb-like-block {
+  position: absolute !important;
+  top: 12px;
+  right: 0;
+  width: 160px;
+}
+
+/*--- Copyright Block ---*/
+/* line 807, style.scss */
+.copyright {
+  text-align: center;
+}
+
+/*--- Services Certifications Block ---*/
+/* line 812, style.scss */
+#block-block-9 {
+  float: left;
+  width: 500px;
+  clear: none;
+  margin-right: 30px;
+}
+
+/* line 818, style.scss */
+#block-block-10 {
+  float: left;
+  width: 320px;
+  clear: none;
+}
+
+/*--- Swicth Lang Block ---*/
+/* line 825, style.scss */
+.lang {
+  position: absolute !important;
+  right: 0;
+  bottom: 155px;
+}
+/* line 829, style.scss */
+.lang h2 {
+  position: absolute;
+  left: -999em;
+}
+/* line 833, style.scss */
+.lang .content li {
+  float: left;
+  margin-right: 15px;
+}
+/* line 837, style.scss */
+.lang .content a {
+  color: #fff;
+}
+/* line 839, style.scss */
+.lang .content a:hover {
+  text-decoration: underline;
+}
+
+/*--- Login Block ---*/
+/* line 847, style.scss */
+.loginpop-login-form {
+  border: 3px solid #ccc;
+  background: #fff;
+}
+
+/*--- 108 FAQ Block ---*/
+/* line 854, style.scss */
+.faq-108 h2 {
+  font-size: 28px;
+}
+
+/* line 859, style.scss */
+#content-inner .view-faq {
+  padding-top: 20px;
+}
+
+/*********************************************************
+						8. Node
+**********************************************************/
+/*--- Submitted ---*/
+/* line 869, style.scss */
+.submitted {
+  margin: 0;
+  padding: 5px 0 10px;
+}
+
+/* line 875, style.scss */
+.node .field-field-image {
+  margin: 0 15px 15px 0;
+}
+
+/* line 883, style.scss */
+.node-terms ul.tags li a {
+  padding: 0 5px;
+  background: #DCAF5E;
+  color: #553623;
+}
+/* line 890, style.scss */
+.node-certification_page .node-terms {
+  display: none;
+}
+
+/* line 894, style.scss */
+.views-field-name .field-content a {
+  float: left;
+  background: #DCAF5E;
+  padding: 3px 10px;
+  margin: 0 10px 0 0;
+  font-size: 0.9em;
+  color: #553623;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  font-size: 0.9em;
+}
+
+/*--- Share ---*/
+/* line 909, style.scss */
+.node-links li {
+  float: left;
+}
+/* line 911, style.scss */
+.node-links li.facebook_like {
+  width: 120px;
+  height: 25px;
+}
+/* line 916, style.scss */
+.node-links li.tweetmeme, .node-links li.google_plus {
+  width: 70px;
+}
+/* line 918, style.scss */
+.node-links li.print_html {
+  clear: left;
+}
+/* line 919, style.scss */
+.node-links li.print_html, .node-links li.print_mail {
+  width: 120px;
+  font-size: 12px;
+  margin-left: 0;
+}
+/* line 923, style.scss */
+.node-links li.print_html img, .node-links li.print_mail img {
+  float: left;
+}
+/* line 926, style.scss */
+.node-links li.print_html .image-caption-container, .node-links li.print_mail .image-caption-container {
+  width: auto !important;
+}
+
+/* line 933, style.scss */
+.filefield-file .image-caption-container {
+  width: auto !important;
+}
+/* line 935, style.scss */
+.filefield-file .image-caption-container img {
+  float: left;
+  margin: 0 10px 0 0;
+}
+/* line 939, style.scss */
+.filefield-file .image-caption-container .image-caption {
+  display: none !important;
+}
+
+/*--- Comment ---*/
+/* line 946, style.scss */
+#comments .comment {
+  margin-bottom: 10px;
+}
+/* line 948, style.scss */
+#comments .comment h3 {
+  padding: 3px 10px;
+  border-bottom: 1px solid #ccc;
+  background: #efefef;
+}
+/* line 954, style.scss */
+#comments .submitted {
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+/* line 958, style.scss */
+#comments .links {
+  font-size: 16px;
+}
+
+/*********************************************************
+						9. Site offline
+**********************************************************/
+/* line 967, style.scss */
+.in-maintenance #content-inner {
+  padding: 30px;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+/* line 974, style.scss */
+div.error {
+  display: none;
+}
+
+/* line 977, style.scss */
+.view-header h1 {
+  font: 38px/1.2em DBMomentXRegular, Helvetica, Thonburi, Tahoma, sans-serif;
+  padding: 10px 0 0;
+}
+
+/* line 984, style.scss */
+.node-inner h1.title {
+  font: 42px/1.2em DBMomentXRegular, Helvetica, Thonburi, Tahoma, sans-serif;
+  border-bottom: 1px solid #ccc;
+}

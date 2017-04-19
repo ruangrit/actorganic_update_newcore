@@ -1,0 +1,3 @@
+name = Custom Settings
+description = Create custom admin settings page.
+core = 6.x

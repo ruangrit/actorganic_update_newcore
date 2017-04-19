@@ -1,0 +1,22 @@
+<?php
+function imagefield_thumb_menu() {
+    $items['admin/settings/imagefield_thumb'] = array(
+        'title'            => 'Imagefield thumbnail',
+        'description'      => '',
+        'page callback'    => 'drupal_get_form',
+        'page arguments'   => array('imagefield_thumb_settings'),
+        'access arguments' => array('administer site configuration'),
+        'type'             => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+function imagefield_thumb_settings() {
+  $form['imagefield_thumb_size'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Preview size'),
+    '#description'   => t('Specify thumb size (pixel) to display in node form, default: <em>100x100</em> (width and height with \'x\' between them).'),
+    '#default_value' => variable_get('imagefield_thumb_size', '100x100'),
+  );
+  return system_settings_form($form);
+}

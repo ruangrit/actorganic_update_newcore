@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Implementation of hook_install().
+ */
+function subfield_install() {
+  drupal_load('module', 'content');
+  content_notify('install', 'subfield');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function subfield_uninstall() {
+  drupal_load('module', 'content');
+  content_notify('uninstall', 'subfield');
+}
+
+/**
+ * Implementation of hook_enable().
+ *
+ * Notify content module when this module is enabled.
+ */
+function subfield_enable() {
+  drupal_load('module', 'content');
+  content_notify('enable', 'subfield');
+}
+
+/**
+ * Implementation of hook_disable().
+ *
+ * Notify content module when this module is disabled.
+ */
+function subfield_disable() {
+  drupal_load('module', 'content');
+  content_notify('disable', 'subfield');
+}

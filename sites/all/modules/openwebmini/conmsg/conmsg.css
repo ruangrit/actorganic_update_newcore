@@ -1,0 +1,25 @@
+#conmsg-wrap .show {
+  width: auto;
+  height: auto;
+  position: relative;
+}
+#conmsg-wrap .hide {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  overflow: hidden;
+  z-index: 10000;
+
+}
+#conmsg-wrap .hide .warning {
+  background-image: url(http://openwebmini.local/sites/all/themes/genesis/genesis/images/warning.png);
+  background-repeat-x: no-repeat;
+  background-repeat-y: no-repeat;
+  background-attachment: initial;
+  background-position-x: 0px;
+  background-position-y: 0px;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: transparent;
+  border: 0px solid;
+}

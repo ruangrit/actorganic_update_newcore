@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * Implementation of hook_perm().
+ */
+function custom_settings_perm() {
+  $perms = array(
+    'administer custom settings',
+  );
+  return $perms;
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function custom_settings_menu() {
+  $items['admin/build/custom_settings'] = array(
+    'title' => t('Custom settings'),
+    'page callback' => array('custom_settings_admin'),
+    'access arguments' => array('administer custom settings'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'includes/custom_settings.admin.inc',
+  );
+  $items['admin/build/custom_settings/list'] = array(
+    'title' => t('List'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -1,
+  );
+  $items['admin/build/custom_settings/%/fields'] = array(
+    'title' => t('Remove'),
+    'page callback' => array('custom_settings_fields'),
+    'page arguments' => array(3),
+    'access arguments' => array('administer custom settings'),
+    'type' => MENU_CALLBACK,
+    'file' => 'includes/custom_settings.admin.inc',
+  );
+  $items['admin/build/custom_settings/%/remove'] = array(
+    'title' => t('Remove'),
+    'page callback' => array('custom_settings_remove_path'),
+    'page arguments' => array(3),
+    'access arguments' => array('administer custom settings'),
+    'type' => MENU_CALLBACK,
+    'file' => 'includes/custom_settings.admin.inc',
+  );
+  $items['admin/build/custom_settings/%/fields/%/remove'] = array(
+    'title' => t('Remove'),
+    'page callback' => array('custom_settings_remove_path'),
+    'page arguments' => array(3, 5),
+    'access arguments' => array('administer custom settings'),
+    'type' => MENU_CALLBACK,
+    'file' => 'includes/custom_settings.admin.inc',
+  );
+  return $items;
+}

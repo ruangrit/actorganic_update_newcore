@@ -1,0 +1,5 @@
+name = Filefield description
+description = Create textarea for filefield description instead of textbox.
+core = 6.x
+version = 6.x-1.0
+package = Opendream

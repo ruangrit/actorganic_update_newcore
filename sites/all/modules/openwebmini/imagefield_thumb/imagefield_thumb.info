@@ -1,0 +1,7 @@
+name = ImageField Thumb
+description = Simply add imagefield thumbnail size configuration page.
+core = 6.x
+dependencies[] = imagefield
+package = CCK
+version = "6.x-1.0"
+

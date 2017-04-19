@@ -1,0 +1,13 @@
+/* ipad (portrait and landscape) ----------- pink */
+@media only all and (min-width: 480px) and (max-width: 768px){
+	 body.sidebar-right {
+	    background: red;
+ 	    #content-inner, #content-top {
+	      margin-right: 0;
+	    }
+	    #sidebar-right {
+	      margin-left: 0; 
+	      width: 100%;
+	    }
+	  }
+}

@@ -1,0 +1,6 @@
+name = Block Visibility
+description = Separate visibility settings for each theme.
+core = 6.x
+version = 6.x-1.0
+
+dependencies[] = block

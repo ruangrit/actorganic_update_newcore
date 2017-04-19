@@ -1,0 +1,11 @@
+; $Id: on_the_web.info,v 1.1.2.1 2010/02/09 00:10:58 jenlampton Exp $
+name = On The Web
+description = A block that links cute icons to your twitter, facebook, youtube, flickr, and myspace presence on the web.
+package = Other
+core = 6.x
+; Information added by drupal.org packaging script on 2010-10-18
+version = "6.x-1.0"
+core = "6.x"
+project = "on_the_web"
+datestamp = "1287381083"
+

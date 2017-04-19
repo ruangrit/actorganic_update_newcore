@@ -1,0 +1,6 @@
+; $Id$
+name = Views Manager
+description = Views manager for bulk delete
+core = 6.x
+
+dependencies[] = views

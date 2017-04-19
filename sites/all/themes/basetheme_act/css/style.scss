@@ -1,0 +1,989 @@
+/*......................................................................... 
+    Project:   BaseTheme - ACT
+    Version:   1.1
+    File:      style.css
+    copyright: Since 2012 Opendream Co., Ltd.
+    By:        Chatchai Tutiyanond
+......................................................................... */
+
+
+
+/*********************************************************
+						READ ME
+**********************************************************/
+
+/* You must read this before you write to understand my code
+
+1. Write @import CSS, $var, @mixin in (1)first section only
+2. (2)Base Style is style on HTML Elements, Form, Components(reuse class), Container, etc
+3. (6)View - View block in here
+4. (7)Block - block in here */
+
+/*********************************************************
+						READ ME
+**********************************************************/
+
+
+
+/* Table of CSS Section
+---------------------------------------------------------*/
+
+/*
+	1. All @import CSS, All $var, All @mixin
+	2. Base Style
+	3. Navigation
+	4. Global View
+	5. Global Block
+	6. View
+	7. Block
+	8. Nodes
+*/
+
+/*********************************************************
+		1. All @import CSS, All $var, All @mixin
+**********************************************************/
+
+/*--- Import ---*/
+@import "default-scss";
+
+/*Var*/
+
+/*--- Base Vars ---*/
+
+/* Text Color */
+$Base_FontColor:  #333;
+$Alter_FontColor: #333;
+
+/* Link Color */
+$Base_LinkColor: #AF7F20;
+$Base_LinkHover: #cc9933;
+
+/*Nav Color*/
+$Nav_LinkColor: #fff;
+$Nav_LinkHover: #99cc33;
+
+/* Footer Link color */
+$Footer_Color: #ad816b;
+
+/* Heading h1,h2.h3,.. */
+$Base_HeadingColor: #2b2b2b;
+
+/* Background Color */
+$BackgroundColor: #553623; 
+$BackgroundContent: #fff; /* rgba(255, 255, 255, 0.67) */
+$BackgroundReset: transparent;
+$BackgroundGreen: #99ba27;
+
+/* Default font */
+$defaultfont: 14px/1.5em Helvetica, Thonburi, Tahoma, sans-serif;
+
+/*--- Mixin ---*/
+@mixin accessibly-hidden {
+	position: absolute;
+	left: -999em;
+}
+@mixin has-layout-block {
+	display: inline-block;
+	& {
+		display: block;
+	}
+}
+@mixin pie-clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	@include has-layout-block;
+}
+@mixin text-shadow($h, $v, $blur, $color){
+	-webkit-text-shadow: $h $v $blur $color;
+	-moz-text-shadow:    $h $v $blur $color;
+	text-shadow:         $h $v $blur $color;
+}
+@mixin box-shadow($h, $v, $blur, $spread, $color){
+	-webkit-box-shadow: $h, $v, $blur, $spread, $color;
+	-moz-box-shadow:    $h, $v, $blur, $spread, $color;
+	box-shadow:         $h, $v, $blur, $spread, $color;
+}
+@mixin radius($topright, $topleft, $bottomright, $bottomleft){
+	-webkit-border-radius: $topright $topleft $bottomright $bottomleft;
+	   -moz-border-radius: $topright $topleft $bottomright $bottomleft;
+	        border-radius: $topright $topleft $bottomright $bottomleft;
+}
+
+/*********************************************************
+						2. Base Style
+**********************************************************/
+
+/*--- @font-face ---*/
+@font-face {
+    font-family: 'DBMomentXRegular';
+    src: url('../fonts/db_moment_x-webfont.eot');
+    src: url('../fonts/db_moment_x-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/db_moment_x-webfont.woff') format('woff'),
+         url('../fonts/db_moment_x-webfont.ttf') format('truetype'),
+         url('../fonts/db_moment_x-webfont.svg#DBMomentXRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-weight:600;
+}
+@font-face {
+    font-family: 'DBMomentXThinThin';
+    src: url('../fonts/db_moment_x_thin-webfont.eot');
+    src: url('../fonts/db_moment_x_thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/db_moment_x_thin-webfont.woff') format('woff'),
+         url('../fonts/db_moment_x_thin-webfont.ttf') format('truetype'),
+         url('../fonts/db_moment_x_thin-webfont.svg#DBMomentXThinThin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-weight:600;
+}
+
+/*--- HTML Elelments ---*/
+body#base-fixed {
+	font: lighter 20px / 1.2em DBMomentXRegular, Helvetica, Thonburi, Tahoma, sans-serif;
+	color: $Base_FontColor;
+	background: $BackgroundColor url('../images/bg.jpg') repeat-x;
+	&.admin-menu{
+		background-position: 0 35px;
+	}
+}
+
+a {
+	color: $Base_LinkColor;
+	&:link { color: $Base_LinkColor; }
+	&:hover, &.active, &:active {
+		color: $Base_LinkHover;
+	}
+}
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: 28px;
+	color: $Base_HeadingColor;
+}
+
+
+
+/*--- Components ---*/
+.btn-green{
+	@include radius(10px, 10px , 10px, 10px);
+	display:inline-block;
+	color:#ccff66;
+	font-size: 24px;
+	text-align: center;
+	border:1px solid #a6bf52;
+	background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #728f00), color-stop(1, #517f0b) );
+	background: -moz-linear-gradient( center top, #728f00 5%, #517f0b 100% );
+	filter:     progid:DXImageTransform.Microsoft.gradient(startColorstr='#728f00', endColorstr='#517f0b');
+	background-color:#728f00;
+	-webkit-box-shadow: inset 0px 0px 16px -4px #faffde;
+	-moz-box-shadow:    inset 0px 0px 16px -4px #faffde;
+	box-shadow:         inset 0px 0px 16px -4px #faffde;
+	text-shadow:        1px 1px 0px #383538;
+}
+
+/*--- Form ---*/
+input.form-text{
+	font-size: 14px;
+}
+
+/*--- Header Section ---*/
+#header-wrapper{
+	padding: 0px;
+	margin: 0;
+}
+#header{
+	position: relative;
+	height: 430px;
+}
+#branding{
+	position: relative;
+	top: 0;
+	left: 270px;
+	width: 416px;
+	height: 260px;
+}
+
+.not-front #main-content {
+	font: 14px/1.5em Helvetica,Thonburi,Tahoma,sans-serif;
+	h2 {
+		
+		font: 37px/1.2em DBMomentXRegular, Helvetica, Thonburi, Tahoma, sans-serif
+	}
+	
+}
+/*--- #content-top ---*/
+#content-top{
+	padding: 15px 20px 0;
+	background: $BackgroundContent;
+}
+
+/*--- #content-top ---*/
+#feature{
+	.not-front &{
+		width: auto !important;
+		padding: 20px !important;
+		margin-bottom: 15px !important;
+		background: $BackgroundContent;
+	}
+}
+
+/*--- #content-inner ---*/
+#content-inner{
+	background: $BackgroundContent;	
+	border-radius: 10px;
+	.not-front &{
+		padding: 0 20px 20px;
+	}
+	.node-type-certification-page &{
+		padding: 20px;
+	}
+}
+	#content{
+		.page-contact &{
+			background: #fff;		
+		}
+	}
+
+/*--- Content Bottom ---*/
+#content-bottom{
+	padding: 40px 20px;
+	background: $BackgroundGreen;
+	.block{
+		float: left;
+		margin: 0;
+		clear: none;
+	}
+}
+
+/*--- Footer Section ---*/
+#footer{
+	position: relative;
+	.block .content{
+		font-family: DBMomentXThinThin;
+		font-size: 22px;
+		color: $Footer_Color;
+	}
+}
+
+/*--- Sidebar Section ---*/
+.sidebar{
+	padding-bottom: 20px;
+	background: $BackgroundContent;
+	border-radius: 10px;
+	.block{
+		margin-bottom: 0;
+		h2{
+			padding: 10px 20px 0;
+			margin: 0;
+		}
+		.content{
+			padding: 0 20px 0px;
+			background: $BackgroundContent;
+		}
+	} 	
+} 
+
+/*********************************************************
+						3. Nav
+**********************************************************/
+.nav{
+	h2{
+		@include accessibly-hidden;
+	}
+	.content{
+		a{
+			color: $Nav_LinkColor;
+			&:hover{
+				color: $Nav_LinkHover;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+/*--- Primary Nav with submenu ---*/
+
+#block-nice_menus-1{
+	position: relative;
+	top: 33px;
+	width: 945px;
+	height: 106px;
+	margin: 0;
+	font-size: 30px;
+	background: url('../images/nav.png') no-repeat;
+	z-index: 9999;
+	.content{
+		.nice-menu{
+			float: left;
+			margin: 33px 0 0 20px;
+		}
+		ul.nice-menu {
+			li{
+				display: inline;
+				float: left;
+				margin: 0;
+				padding: 0 34px;
+				border-right: 1px solid #000;
+				border-left: 1px solid #735b46;
+				  ul {
+				    background: none;
+				    font-size: 25px;
+				    border: none;
+				    li {
+					   background: none;
+					   padding: 0;
+					   border: none;
+					   width: 8.5em;
+					   a {
+					     background: #5f361f;
+					     border-bottom: 1px solid #654608;
+						 &:hover {background: #442514}  
+						 &.active {
+						   background: #5f361f
+						   }  
+					   } 
+				    }	  
+					  
+				  }
+				a{
+					@include text-shadow(2px, 4px, 4px, #000);
+					background: none;
+					border: none;
+					padding: 0;
+					color: white;
+					&:hover {
+						background: none;
+						color: $Nav_LinkHover;
+					}
+					&.active{
+						color: $Nav_LinkHover;
+						background: none;
+					}
+				}
+				&.first{
+					border-left: none;
+				}
+				&.last{
+					border-right: none;
+				}
+			}
+			
+		}
+		
+	}
+}
+
+
+/*--- Primary Nav ---*/
+#block-menu_block-4{
+	position: relative;
+	top: 33px;
+	width: 945px;
+	height: 136px;
+	margin: 0;
+	font-size: 30px;
+	background: url('../images/nav.png') no-repeat;
+	.content{
+		.menu{
+			float: left;
+			margin: 55px 0 0 20px;
+		}
+		li{
+			display: inline;
+			float: left;
+			margin: 0;
+			padding: 0 40px;
+			border-right: 1px solid #000;
+			border-left: 1px solid #735b46;
+			a{
+				@include text-shadow(2px, 4px, 4px, #000);
+				&.active{
+					color: $Nav_LinkHover;
+				}
+			}
+			&.first{
+				border-left: none;
+			}
+			&.last{
+				border-right: none;
+			}
+		}
+	}
+}
+
+/*--- Secondary Nav ---*/
+#block-menu-secondary-links{
+	float: left;
+	width: 550px;
+	margin-bottom: 40px !important;
+	.menu{
+		li{
+			float: left;
+			margin: 0;
+			padding: 0;
+		}
+		a{
+			float: left;
+			margin: 0 10px 0 0;
+			padding: 0 10px 0 0;
+			border-right: 1px solid #fff;
+			line-height: 10px;
+		}
+	}
+}
+
+/*--- Menu Sidebar ---*/
+.menu-sidebar{
+	.view-content{
+		.item-list ul{
+			padding: 0 0 0 1em;
+		}
+		.views-row{
+			list-style: disc;
+			margin: 0 0 4px 0.5em;
+		}
+	}
+}
+
+/*********************************************************
+					4. Global View
+**********************************************************/
+.view-news, .view-article, .view-taxonomy{
+	.view-content{
+		.views-row{
+			@include pie-clearfix;
+			margin-bottom: 10px;		
+		}
+		.views-field-title{
+			font-size: 20px;
+			line-height: 1.5em;
+		}
+		.views-field-field-image-fid img {
+			margin: 0 15px 15px 0;
+		}
+		.views-field-body{
+			margin: 0 0 10px;
+		}
+		a{
+			color: $Base_LinkColor;
+		}
+	}
+}
+
+/*--- Pager on View ---*/
+.item-list {
+	ul.pager {
+		li {
+			a{
+				color: $Base_LinkColor;
+			}
+			background: $BackgroundContent;
+			&.pager-current {
+				color: #999;
+				background: $BackgroundContent;
+			}
+			&:hover {
+				background: $BackgroundContent;
+			}
+		}
+	}
+}
+
+
+/*********************************************************
+					5. Global Block
+**********************************************************/
+/*--- Block Edit Section ---*/
+div.block div.block-edit{
+	font-size: 12px;
+}
+
+/*--- Local-tasks Section ---*/
+.local-tasks{
+	margin-bottom: 10px;
+}
+
+/*--- Breadcrumb Section ---*/
+#breadcrumb{
+	/*display: none;*/
+	margin-top: 0;
+	    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.16);
+    color: #EAEAEA;
+
+}
+	.breadcrumb{
+		padding: 4px 20px;
+	}
+	
+.slide-title{
+	font-size: 28px;
+	margin: 0 0 10px;
+}
+.slide-teaser {font: $defaultfont;}
+
+.node_translation_en, .node_translation_th{
+	display: none !important;
+}
+	
+/*********************************************************
+					6. View Blocks
+**********************************************************/
+
+/*--- Front Page Slideshow View ---*/
+#block-views-front_slide-block_1{
+	position: relative;
+	margin: 0 0 20px;
+	.nivo-caption{
+		width: 930px;
+		padding: 15px;
+	}
+	.view-footer{
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		z-index: 9999;
+		padding:  2px 7px;
+		background: #fff;
+	}
+	.nivo-caption{
+		padding-bottom: 30px;
+	}
+	.nivo-controlNav{
+		position: absolute;
+		bottom: 15px;
+		left: 430px;
+		a{
+			width: 15px;
+			height: 15px;
+			overflow: hidden;
+			margin-right: 8px;
+			background: url('../images/slide-nav.png') no-repeat left top;
+			&.active{
+				background-position: -15px 0;
+			}
+		}
+	}
+}
+
+/*--- FAQ Overview page View ---*/
+.view-image-block{
+	.view-content{
+		.views-field-body{
+			float: left;
+			width: 600px;
+		}
+		.views-field-field-image-single-fid{
+			.page-faq &{
+				float: right;
+				margin: 0 40px 0 0;
+			}	
+		}
+	}
+	.view-footer{
+		clear: both;
+	}
+}
+
+/*--- FAQ List View ---*/
+.view-faq{
+	.views-accordion-item{
+		.accordion-header{
+			padding-left: 60px;
+			background: #fbfbfb url('../images/ic-question.png') 12px 8px no-repeat;
+			border-top: none;
+			a{
+				color: $Alter_FontColor;
+			}
+			.totalcount{
+				color: $Base_FontColor;
+			}
+		}
+		.accordion-content{
+			color: $Base_FontColor;
+		}
+		.accordion-header-hover{
+			border-bottom: 1px solid #ccc;
+		}
+	}
+}
+
+/*--- Download List View ---*/
+.view-download-list{
+	.attachment{
+		padding-bottom: 15px;
+	}
+	li.views-row{
+		margin-bottom: 15px !important;
+		padding-bottom: 15px;
+		border-bottom: 1px solid #ddd;
+	}
+	.views-field-phpcode, .views-field-field-attachments-data{
+		color: #999;
+		font-size: 16px;
+	}
+}
+
+/*********************************************************
+						7. Blocks
+**********************************************************/
+/*--- Front Page Certification Service Block ---*/
+.certification-services{
+	h2{
+		@include accessibly-hidden;
+	}
+	padding: 20px 20px 0;
+	margin: 0 !important;
+	position: relative;
+}
+
+	/*--- Table Standart ---*/
+	.standard{
+		margin-bottom: 0;
+		border-collapse: collapse;
+		border: none;
+		text-align: center;
+		color: #cc6600;
+		font: 20px/1.2em DBMomentXRegular, Helvetica, Thonburi, Tahoma, sans-serif;
+	}
+		/*--- Cols Row ---*/
+		.standard .cols-row{
+			padding-bottom: 20px;
+		}
+		.standard .topic{
+			padding-top: 75px;
+		}
+		
+		/*--- Table Row ---*/
+		.standard tr{
+			display: block;
+			float: left;
+			width: 900px;
+			background: url('../images/line.png') no-repeat 300px center;
+		}
+		.standard thead tr{
+			color: #cc9933;
+			background: transparent;
+		}
+		.standard td, .standard th, .standard thead th{
+			padding: 10px 0;
+			border: none;
+			background: none;
+		}
+		.standard td, .standard th{
+			display: inline-block;
+			float: left;
+			width: 92px;
+			background: none !important;
+		}
+		.standard .right{
+			width: 250px;
+			font-size: 24px;
+			text-align: right;
+		}
+		.standard th.right{
+			font-size: 30px;
+		}
+		.standard th span{
+			display: block;
+			width: 70px;
+			height: 65px;
+			padding-left: 20px;
+		}
+	
+	/*--- Table Icon ---*/
+	.standard th .cols, .standard .pass{
+		display: block;
+		overflow: hidden;
+		width: 30px;
+		height: 25px;
+		margin: 0 auto;
+		margin-left: 40px;
+		padding: 0;
+		text-indent: -9999em;
+		background: url('../images/ic-dotted.png') no-repeat;
+	}
+	.standard .pass{
+		width: 30px;
+		height: 31px;
+		background-position: 0 -25px;
+		&:hover{
+			background-position: 0 -56px;
+		}
+	}
+	
+/*--- Front Page 3 items Block ---*/
+.our-service-front-block,
+.faq-front-block{
+	width: 250px;
+	min-height: 305px;
+	height:auto !important;
+	height: 305px;
+	h2{
+		@include accessibly-hidden;
+	}
+	.view-footer a{
+		color: #ffff66;
+	}
+}
+.faq-front-block{
+	padding-left: 25px;
+/*	border-left: 1px solid #b9d94a;*/
+}
+.news-front-block{
+	width: 300px;
+	min-height: 305px;
+	height:auto !important;
+	height: 305px;
+	padding: 0 30px;
+	background: url('../images/border.png') repeat-y;
+/*	border-left: 1px solid #b9d94a;
+	border-right: 1px solid #70871d;*/
+	font-size: 22px;
+	h2{
+		color: #fff;
+		font-size: 32px;
+	}
+	a{
+		color: #ffff66 !important;
+	}
+	.view-news{
+		ul{
+			border-bottom: 1px dotted #fff;
+			padding-bottom: 10px;
+			margin-bottom: 20px;
+		}
+	}
+	
+	.view-news {
+	   .views-row{
+		  padding-left: 20px;
+		  background: url('../images/ic-list.png') no-repeat 0 5px;
+		  .views-field-title{
+     		font: $defaultfont;
+	 		}
+		}
+		
+	}
+	
+	.more-link{
+		a{
+			display: block;
+			padding-right: 30px;
+			background: url('../images/ic-list.png') no-repeat right -98px;
+		}
+	}
+}
+.our-service-front-block{
+	padding-right: 25px;
+/*	border-right: 1px solid #70871d;*/
+	.view-content{
+		text-align: center;
+	}
+	.views-field-field-url-value{
+		a{
+			@extend .btn-green;
+			width: 140px;
+			margin: 0 auto	;
+			padding: 7px 20px;
+		}
+	}
+	.view-footer{
+		clear: both;
+	}
+}
+
+/*--- Facebook Block ---*/
+.fb-like-block{
+	position: absolute !important;
+	top: 12px;
+	right: 0;
+	width: 160px;
+}
+
+/*--- Copyright Block ---*/
+.copyright{
+	text-align: center;
+}
+
+/*--- Services Certifications Block ---*/
+#block-block-9{
+	float: left;
+	width: 500px;
+	clear: none;
+	margin-right: 30px;
+}
+#block-block-10{
+	float: left;
+	width: 320px;
+	clear: none;
+}
+
+/*--- Swicth Lang Block ---*/
+.lang{
+	position: absolute !important;
+	right: 0;
+	bottom: 155px;
+	h2{
+		@include accessibly-hidden;
+	}
+	.content{
+		li{
+			float: left;
+			margin-right: 15px;
+		}
+		a{
+			color: #fff;
+			&:hover{
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+/*--- Login Block ---*/
+.loginpop-login-form {
+	border: 3px solid #ccc;
+	background: #fff; 
+}
+
+/*--- 108 FAQ Block ---*/
+.faq-108{
+	h2{
+		font-size: 28px;
+	}
+}
+.view-faq{
+	#content-inner &{
+		padding-top: 20px;
+	}
+}
+
+
+/*********************************************************
+						8. Node
+**********************************************************/
+/*--- Submitted ---*/
+.submitted{
+	margin: 0;
+	padding: 5px 0 10px;
+}
+
+.node{
+	.field-field-image {
+		margin: 0 15px 15px 0;
+	}	
+}
+
+.node-terms{
+	ul.tags{
+		li{
+			a{
+				padding: 0 5px;
+				 background: #DCAF5E;
+				 color: #553623;
+			}
+		} 
+	}
+	.node-certification_page &{
+		display: none;
+	}
+}
+.views-field-name .field-content a {
+    float: left;
+    background: #DCAF5E;
+    padding: 3px 10px;
+    margin: 0 10px 0 0;
+    font-size: 0.9em;
+    color: #553623;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    font-size: 0.9em;
+}
+
+/*--- Share ---*/
+.node-links{
+	li{
+		float: left;
+		&.facebook_like{
+			width: 120px;
+			height: 25px;
+		//	clear: both;
+		}
+		&.tweetmeme, &.google_plus{
+			width: 70px;
+		}&.print_html {clear: left;}
+		&.print_html, &.print_mail{
+			width: 120px;
+			font-size: 12px;
+			margin-left: 0;
+			img{
+				float: left;
+			}
+			.image-caption-container{
+				width: auto !important;
+			}
+		}
+	}
+}
+.filefield-file {
+	.image-caption-container{
+		width: auto !important;
+		img {
+			float: left;
+			margin: 0 10px 0 0;
+		}
+		.image-caption {display: none !important;}
+	}
+
+}
+
+/*--- Comment ---*/
+#comments{
+	.comment{
+		margin-bottom: 10px;
+		h3{
+			padding: 3px 10px;
+			border-bottom: 1px solid #ccc;
+			background: #efefef;
+		}
+	}
+	.submitted{
+		margin-bottom: 5px;
+		font-size: 16px;
+	}
+	.links{
+		font-size: 16px;
+	}
+}
+
+/*********************************************************
+						9. Site offline
+**********************************************************/
+.in-maintenance {
+	#content-inner {
+		padding: 30px;
+		font-size: 1.5em;
+		text-align: center;
+	}
+}
+
+div.error {display: none;}
+
+.view-header {
+	h1 {
+	  font: 38px/1.2em DBMomentXRegular, Helvetica, Thonburi, Tahoma, sans-serif;
+	  padding: 10px 0 0;
+	}
+	
+}
+.node-inner {
+	h1.title {
+	  font: 42px/1.2em DBMomentXRegular, Helvetica, Thonburi, Tahoma, sans-serif;
+	  border-bottom: 1px solid #ccc;
+	}
+	
+}
